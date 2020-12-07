@@ -3,7 +3,7 @@
 
 BRUH
 
-Dude oh my god
+Hello!
 
 Welcome!
 
