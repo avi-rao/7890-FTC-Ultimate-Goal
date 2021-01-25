@@ -18,6 +18,9 @@ public class TeleOpv1 extends OpMode {
     DcMotor rightBack;
     DcMotor center;
 
+    DcMotor clawMotor;
+    Servo clawServo;
+
     /*
     ---DIRECTION SETUP---
      */
@@ -31,6 +34,9 @@ public class TeleOpv1 extends OpMode {
         rightFront = hardwareMap.dcMotor.get("right front");
         rightBack = hardwareMap.dcMotor.get("right back");
         center = hardwareMap.dcMotor.get("center");
+
+        clawMotor = hardwareMap.dcMotor.get("claw motor");
+        clawServo = hardwareMap.servo.get("claw servo");
 
         /*
         ---DIRECTIONS---
@@ -73,9 +79,14 @@ public class TeleOpv1 extends OpMode {
         triggers to rotate claw, bumpers to open and close claw
          */
 
-        double drive = gamepad1.left_stick_y;
-        double strafe = gamepad1.left_stick_x;
-        double turn = gamepad1.right_stick_x;
+
+        /*
+        DRIVE TRAIN
+         */
+
+        double drive = (double) gamepad1.left_stick_y; //sets drive to the value of the left joystick y axis
+        double strafe = (double) gamepad1.left_stick_x; //sets strafe to the value of the left joystick x axis
+        double turn = (double) gamepad1.right_stick_x; //sets turn to the value of the right joystick x axis
 
         leftFront.setPower(drive + turn/2);
         leftBack.setPower(drive + turn/2);
@@ -83,6 +94,33 @@ public class TeleOpv1 extends OpMode {
         rightBack.setPower(drive - turn/2);
 
         center.setPower(strafe);
+
+
+        //triggers return double values between 0-1
+        //bumpers return boolean values (true if pressed, false if not pressed)
+        //servo to open and close claw, motor to rotate claw
+        //setPower to motor, setPosition for servo
+
+        /*
+        hold down trigger to bring claw down, button to open and close with default pos is down
+        right trigger to move claw up
+        left trigger to move claw down
+         */
+
+
+
+
+        clawMotor.setPower((double) gamepad1.left_trigger);
+        clawMotor.setPower((double) gamepad1.right_trigger);
+
+        //.setPosition();
+
+        if(gamepad1.left_bumper == true) {
+
+        }
+        else if (gamepad1.left_bumper == true) {
+
+        }
 
     }
 }
