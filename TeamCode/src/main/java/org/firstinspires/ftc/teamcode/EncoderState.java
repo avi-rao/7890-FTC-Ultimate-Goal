@@ -38,6 +38,7 @@ public class EncoderState implements State{
             (WHEEL_DIAMETER_INCHES * 3.1415);
 
 
+    
     public EncoderState(ArrayList<DcMotor> motor, double distance, double speed){
         leftFront = motor.get(0);
         rightFront = motor.get(1);

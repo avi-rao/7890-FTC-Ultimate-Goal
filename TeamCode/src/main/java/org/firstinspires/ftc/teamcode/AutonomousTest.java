@@ -39,6 +39,7 @@ public class AutonomousTest extends OpMode
     private StateMachine machine;
 
     EncoderState moveState;
+     TensorFlowState TestState;
 
 
     public void init() {
@@ -103,6 +104,9 @@ public class AutonomousTest extends OpMode
         Plan B: Just use color sensors
         Plan C: We don't have any sensors so we use encoders
          */
+        TestState = new TensorFlowState(hardwareMap.appContext.getResources().getIdentifier(
+                "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
+
 
 
     }

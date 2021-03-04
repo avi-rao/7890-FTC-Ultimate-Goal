@@ -42,7 +42,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
             if (gamepad1.b == true) {
                 wheel.setPower(-1);
             }
-            else if (gamepad1)
+          //  else if (gamepad1)
 
 
         }
