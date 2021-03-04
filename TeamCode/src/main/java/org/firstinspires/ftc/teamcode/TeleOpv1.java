@@ -115,11 +115,19 @@ public class TeleOpv1 extends OpMode {
 
         //.setPosition();
 
-        if(gamepad1.left_bumper == true) {
+        /*keep track of position
+        boolean to keep track
+         */
 
+        boolean isOpen = true;
+
+        if(isOpen == true && gamepad1.left_bumper == true) {
+            clawServo.setPosition(-1);
+            isOpen=false;
         }
-        else if (gamepad1.left_bumper == true) {
-
+        else if (isOpen==false && gamepad1.left_bumper == true) {
+            clawServo.setPosition(1);
+            isOpen=true;
         }
 
     }
