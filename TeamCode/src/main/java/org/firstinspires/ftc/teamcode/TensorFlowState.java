@@ -25,7 +25,7 @@ public class TensorFlowState implements State{
     private static final String LABEL_SECOND_ELEMENT = "Single";
 
     private static final String VUFORIA_KEY =
-            " -- YOUR NEW VUFORIA KEY GOES HERE  --- ";
+            "AT8b7FH/////AAABmd8/7XcIoUBMtVMfRzYIuoYZALWWwdnKWnAlLIT+xtlUtZeKRk98LaKAY1J5HJLfne2s0zlTX6YfKQn4SPqRBq38+5GB4HPJhuGpQ3Hqf7pypMrp2A9/vsW36SQN29hq3qrH28ovtZHatXuBBkl8WjU6saCmbL+aLR856WDBlvnN3CiQyJ6lrU10v0fxuiLYIr2p5LG40jYC31kYy+SRrsHgnA0EGlcwrY/ajR0goX4eNC4hhhLVaK0k24Db1IpRvVO6drv0fxxV6fCxMqsAu8GwJCejUB5IiU+GsNeZI7/hGhu0qmi8LSBBO4ThY+6njXF5y/HkXxrWOZJYnfC0N3jNwLrfC1Bph5X+CZbSi1cI";
 
     private VuforiaLocalizer vuforia;
     private TFObjectDetector tfod;
@@ -59,7 +59,9 @@ public class TensorFlowState implements State{
     }
 
     public State update() {
-    return nextState;
+        runVuphoria();
+
+        return nextState;
     }
     private void initVuforia() {
         /*
@@ -83,7 +85,7 @@ public class TensorFlowState implements State{
         tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_FIRST_ELEMENT, LABEL_SECOND_ELEMENT);
     }
     private void runVuphoria(){
-            boolean active = true;
+        boolean active = true;
         while (active == true) {
                 if (tfod != null) {
                     // getUpdatedRecognitions() will return null if no new information is available since
@@ -91,6 +93,10 @@ public class TensorFlowState implements State{
                     List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
                     if (updatedRecognitions != null) {
                         if (updatedRecognitions.size() == 0 ) {
+
+                            //targetZone = 0;
+                            //active = false;
+
                             // empty list.  no objects recognized.
                         } else {
                             // list is not empty.
@@ -104,9 +110,9 @@ public class TensorFlowState implements State{
                                 }
                                  else if (recognition.getLabel().equals("Quad")) {
                                     targetZone = 2;
-
                                      active = false;
                                 } else {
+                                     targetZone = 0;
                                 }
                                 }
                             }

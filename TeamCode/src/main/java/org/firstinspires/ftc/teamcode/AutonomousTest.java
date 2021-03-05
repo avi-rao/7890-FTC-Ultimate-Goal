@@ -21,7 +21,7 @@ author: 7890 Software
 GOALS: Move the foundation, navigate under the bridge
 DESCRIPTION: This code is used for our autonomous when we are located on the side of with the foundation tray.
  */
-@Autonomous(name="FULL AUTO BLUTRAY", group="Iterative Opmode")
+@Autonomous(name="auton", group="Iterative Opmode")
 public class AutonomousTest extends OpMode
 {
 
