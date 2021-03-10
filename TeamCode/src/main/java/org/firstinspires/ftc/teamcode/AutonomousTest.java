@@ -21,7 +21,7 @@ author: 7890 Software
 GOALS: Move the foundation, navigate under the bridge
 DESCRIPTION: This code is used for our autonomous when we are located on the side of with the foundation tray.
  */
-@Autonomous(name="FULL AUTO BLUTRAY", group="Iterative Opmode")
+@Autonomous(name="auton", group="Iterative Opmode")
 public class AutonomousTest extends OpMode
 {
 
@@ -33,6 +33,7 @@ public class AutonomousTest extends OpMode
     DcMotor rightFront;
     DcMotor leftBack;
     DcMotor rightBack;
+    DcMotor center;
 
     ArrayList<DcMotor> motors = new ArrayList<DcMotor>();
 
@@ -51,6 +52,7 @@ public class AutonomousTest extends OpMode
         leftFront = hardwareMap.dcMotor.get("left front");
         rightBack = hardwareMap.dcMotor.get("right back");
         leftBack = hardwareMap.dcMotor.get("left back");
+        center = hardwareMap.dcMotor.get("center");
         
         /*
         ---MOTOR DIRECTIONS---
@@ -65,13 +67,14 @@ public class AutonomousTest extends OpMode
         motors.add(leftFront);
         motors.add(rightBack);
         motors.add(leftBack);
+        motors.add(center);
        
 
         /*
         ---USING STATES---
          */
-
-        moveState = new EncoderState(motors, 10, 1.0);
+//The d here is subject to change via testing, just wanted to put it there because it resolved the error and we need one.
+        moveState = new EncoderState(motors, 10, 1.0, "forward");
 
         moveState.setNextState(null);
 
