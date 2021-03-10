@@ -73,8 +73,8 @@ public class AutonomousTest extends OpMode
         /*
         ---USING STATES---
          */
-
-        moveState = new EncoderState(motors, 10, 1.0);
+//The d here is subject to change via testing, just wanted to put it there because it resolved the error and we need one.
+        moveState = new EncoderState(motors, 10, 1.0, "forward");
 
         moveState.setNextState(null);
 
