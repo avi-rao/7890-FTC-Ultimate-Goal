@@ -33,6 +33,7 @@ public class AutonomousTest extends OpMode
     DcMotor rightFront;
     DcMotor leftBack;
     DcMotor rightBack;
+    DcMotor center;
 
     ArrayList<DcMotor> motors = new ArrayList<DcMotor>();
 
@@ -51,6 +52,7 @@ public class AutonomousTest extends OpMode
         leftFront = hardwareMap.dcMotor.get("left front");
         rightBack = hardwareMap.dcMotor.get("right back");
         leftBack = hardwareMap.dcMotor.get("left back");
+        center = hardwareMap.dcMotor.get("center");
         
         /*
         ---MOTOR DIRECTIONS---
@@ -65,6 +67,7 @@ public class AutonomousTest extends OpMode
         motors.add(leftFront);
         motors.add(rightBack);
         motors.add(leftBack);
+        motors.add(center);
        
 
         /*

@@ -18,11 +18,14 @@ public class EncoderState implements State{
     DcMotor rightFront;
     DcMotor leftBack;
     DcMotor rightBack;
+    DcMotor center;
 
     double dist;
     double power;
 
     int target;
+
+    String direc;
 
     State nextState;
 
@@ -39,14 +42,16 @@ public class EncoderState implements State{
 
 
     
-    public EncoderState(ArrayList<DcMotor> motor, double distance, double speed){
+    public EncoderState(ArrayList<DcMotor> motor, double distance, double speed, String d ){
         leftFront = motor.get(0);
         rightFront = motor.get(1);
         leftBack = motor.get(2);
         rightBack = motor.get(3);
+        center = motor.get(4);
 
         dist = distance;
         power = speed;
+        direc = d;
 
     }
 
@@ -61,11 +66,13 @@ public class EncoderState implements State{
         rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        center.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         leftBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        center.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     public State update(){
@@ -84,32 +91,48 @@ public class EncoderState implements State{
         leftBack.setTargetPosition(target);
         rightFront.setTargetPosition(target);
         rightBack.setTargetPosition(target);
+        center.setTargetPosition(target);
 
 
-        leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        leftBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        if(direc.equals("forward") || direc.equals("backward")) {
+            leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            leftBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        leftFront.setPower(power);
-        leftBack.setPower(power);
-        rightFront.setPower(power);
-        rightBack.setPower(power);
+            leftFront.setPower(power);
+            leftBack.setPower(power);
+            rightFront.setPower(power);
+            rightBack.setPower(power);
+
+            while (leftFront.isBusy()
+                    || rightFront.isBusy()
+                    || leftBack.isBusy()
+                    || rightBack.isBusy()) {
+                if (runtime.seconds() > timeout) {
+                    break;
+                }
+            }
+        }
+        if (direc.equals("left") || direc.equals("right")) {
+            center.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            center.setPower(power);
+
+            while (center.isBusy()) {
+                if (runtime.seconds() > timeout) {
+                    break;
+                }
+            }
+        }
 
         runtime.reset();
 
         leftFront.isBusy();
 
-        while (leftFront.isBusy()
-                || rightFront.isBusy()
-                || leftBack.isBusy()
-                || rightBack.isBusy()) {
-            if (runtime.seconds() > timeout) {
-                break;
-            }
-        }
 
-        stop(leftFront, rightFront, leftBack, rightBack);
+
+        stop(leftFront, rightFront, leftBack, rightBack, center);
 
         leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -119,12 +142,13 @@ public class EncoderState implements State{
     }
 
 
-    public void stop(DcMotor motorlf, DcMotor motorrf, DcMotor motorlb, DcMotor motorrb) {
+    public void stop(DcMotor motorlf, DcMotor motorrf, DcMotor motorlb, DcMotor motorrb, DcMotor c) {
         //robot stops moving
         motorlf.setPower(0.0);
         motorrf.setPower(0.0);
         motorlb.setPower(0.0);
         motorrb.setPower(0.0);
+        c.setPower(0.0);
     }
 
 
