@@ -79,13 +79,15 @@ public class RunToTargetZone implements State{
     public void runToA() {
         if(side.equals("red")) {
             center.setPower(-1);
+            wait(500);
             runToTape();
         }
         if(side.equals("blue")) {
             center.setPower(1);
+            wait(500);
             runToTape();
         }
-        
+
 
 
     }
