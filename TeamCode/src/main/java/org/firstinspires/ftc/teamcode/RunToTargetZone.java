@@ -107,6 +107,14 @@ public class RunToTargetZone implements State{
     }
 
     public void runToC() {
+        if(side.equals("red")) {
+            center.setPower(-1);
+            wait(500);
+        }
+        if(side.equals("blue")) {
+            center.setPower(1);
+            wait(500);
+        }
 
         while(distSensor.getDistance(DistanceUnit.INCH) > 5) {//target distance to be tested
             move("forward");
