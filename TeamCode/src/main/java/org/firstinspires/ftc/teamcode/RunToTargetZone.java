@@ -77,7 +77,17 @@ public class RunToTargetZone implements State{
     }
 
     public void runToA() {
-        runToTape();
+        if(side.equals("red")) {
+            center.setPower(-1);
+            runToTape();
+        }
+        if(side.equals("blue")) {
+            center.setPower(1);
+            runToTape();
+        }
+        
+
+
     }
 
     public void runToB() {
@@ -95,6 +105,7 @@ public class RunToTargetZone implements State{
     }
 
     public void runToC() {
+
         while(distSensor.getDistance(DistanceUnit.INCH) > 5) {//target distance to be tested
             move("forward");
         }
