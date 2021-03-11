@@ -46,6 +46,7 @@ public class TeleOpv1 extends OpMode {
         leftBack.setDirection(LEFTDIRECTION);
         rightFront.setDirection(RIGHTDIRECTION);
         rightBack.setDirection(RIGHTDIRECTION);
+        center.setDirection(DcMotor.Direction.REVERSE);
     }
 
     @Override
@@ -84,7 +85,7 @@ public class TeleOpv1 extends OpMode {
         DRIVE TRAIN
          */
 
-        double drive = (double) gamepad1.left_stick_y; //sets drive to the value of the left joystick y axis
+        double drive = (double) - gamepad1.left_stick_y; //sets drive to the value of the left joystick y axis
         double strafe = (double) gamepad1.left_stick_x; //sets strafe to the value of the left joystick x axis
         double turn = (double) gamepad1.right_stick_x; //sets turn to the value of the right joystick x axis
 
