@@ -16,7 +16,7 @@ import java.util.List;
 
 public class TensorFlowState implements State{
 
-    public static int targetZone = 2;
+    public static int targetZone = 2; //using a test value for now
 
     State nextState;
 

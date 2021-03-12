@@ -139,6 +139,8 @@ public class AutonTestTargetRed extends OpMode
     public void loop()  {
 
         machine.update();
+        telemetry.addData("cntr value", tzone.getCntr());
+        telemetry.update();
 
     }
 

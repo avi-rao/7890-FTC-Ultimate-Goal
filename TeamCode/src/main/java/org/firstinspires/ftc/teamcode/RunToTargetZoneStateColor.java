@@ -125,25 +125,30 @@ public class RunToTargetZoneStateColor implements State{
 
 
         if (side.equals("red")) { //the colored tape will stop at red tape
-            while (colorSensor.blue() > colorSensor.red() || colorSensor.green() > colorSensor.red()) {
+            while (cntr < cntrTarget) {
                 //these values are test for setPower. Might want to lower them?
                 move("forward");
+                if(colorSensor.red() > colorSensor.blue() && colorSensor.red() > colorSensor.green()) {
+                    cntr++;
+                    //wait(500); might need lol
+                    if(cntr >= cntrTarget)
+                        move("stop");
+                    wait(500);
+                }
             }
-            cntr++;
-            //wait(500); might need lol
-            if(cntr >= cntrTarget)
-                move("stop");
-            wait(500);
+
         }
         if(side.equals("blue")) { //the robot will stop at blue tape
-            while (colorSensor.red() > colorSensor.blue() || colorSensor.green() > colorSensor.blue()) {
+            while (cntr < cntrTarget) {
                 //these values are test for setPower. Might want to lower them?
                 move("forward");
             }
-            cntr++;
-            //wait(500); might need lol
-            if(cntr >= cntrTarget)
-                move("stop");
+            if(colorSensor.blue() > colorSensor.red() && colorSensor.blue() > colorSensor.green()) {
+                cntr++;
+                //wait(500); might need lol
+                if (cntr >= cntrTarget)
+                    move("stop");
+            }
         }
     }
 
@@ -185,5 +190,8 @@ public class RunToTargetZoneStateColor implements State{
         }
     }
 
+    public int getCntr() {
+        return cntr;
+    }
 
 }
