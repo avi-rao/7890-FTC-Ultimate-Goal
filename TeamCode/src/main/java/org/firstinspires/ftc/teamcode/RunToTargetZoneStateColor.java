@@ -54,6 +54,11 @@ public class RunToTargetZoneStateColor implements State{
     }
 
     public void start(){
+
+
+    }
+
+    public State update() {
         if (t.targetZone == 2) {
             runToC();
         }
@@ -64,10 +69,6 @@ public class RunToTargetZoneStateColor implements State{
             runToA();
         }
 
-
-    }
-
-    public State update() {
 
         return nextState;
     }
@@ -121,8 +122,8 @@ public class RunToTargetZoneStateColor implements State{
         runToTape(3);
     }
 
-    public void runToTape(int cntrTarget) { //Robot runs forward until the first colored tape it senses
-
+    public void runToTape(int cntrTarget) { //Robot runs forward until the cntrTarget-th tape it senses
+    // cntr counts how many times we've sensed the correct color. when cntr == cntrTarget we should stop
 
         if (side.equals("red")) { //the colored tape will stop at red tape
             while (cntr < cntrTarget) {
@@ -131,8 +132,11 @@ public class RunToTargetZoneStateColor implements State{
                 if(colorSensor.red() > colorSensor.blue() && colorSensor.red() > colorSensor.green()) {
                     cntr++;
                     //wait(500); might need lol
-                    if(cntr >= cntrTarget)
+                    if(cntr >= cntrTarget) {
                         move("stop");
+                        break;
+                    }
+
                     wait(500);
                 }
             }
@@ -142,13 +146,16 @@ public class RunToTargetZoneStateColor implements State{
             while (cntr < cntrTarget) {
                 //these values are test for setPower. Might want to lower them?
                 move("forward");
+                if(colorSensor.blue() > colorSensor.red() && colorSensor.blue() > colorSensor.green()) {
+                    cntr++;
+                    //wait(500); might need lol
+                    if (cntr >= cntrTarget) {
+                        move("stop");
+                        break;
+                    }
+                }
             }
-            if(colorSensor.blue() > colorSensor.red() && colorSensor.blue() > colorSensor.green()) {
-                cntr++;
-                //wait(500); might need lol
-                if (cntr >= cntrTarget)
-                    move("stop");
-            }
+
         }
     }
 

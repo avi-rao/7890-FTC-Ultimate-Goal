@@ -20,10 +20,10 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 /*
-7890 Space Lions 2019 "FULL AUTO BLUTRAY"
+7890 Space Lions 2019 "auton target red"
 author: 7890 Software
-GOALS: Move the foundation, navigate under the bridge
-DESCRIPTION: This code is used for our autonomous when we are located on the side of with the foundation tray.
+GOALS: move to the target zone, park
+DESCRIPTION: This code moves us to the target zone using only a color sensor and then parks. We don't use the wobble goal mech in this code
  */
 @Autonomous(name="auton target red", group="Iterative Opmode")
 public class AutonTestTargetRed extends OpMode

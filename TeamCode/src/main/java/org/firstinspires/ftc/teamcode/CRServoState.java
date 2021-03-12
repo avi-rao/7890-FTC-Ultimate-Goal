@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.CRServo;
 
 import org.firstinspires.ftc.teamcode.StateMachine.State;
 
+///state that allows us to set power to our cr servo
 public class CRServoState implements State{
 
     State nextState;

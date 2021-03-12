@@ -5,6 +5,11 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import java.util.ArrayList;
 import org.firstinspires.ftc.teamcode.StateMachine.State;
 
+/*
+7890 Space Lions 2019 "color sense stop state"
+author: 7890 Software
+DESCRIPTION: robot moves in a direction until the color sensor senses the appropriate color
+ */
 public class ColorSenseStopState implements State {
     DcMotor leftFront;
     DcMotor rightFront;

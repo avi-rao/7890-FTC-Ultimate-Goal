@@ -19,6 +19,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import java.util.ArrayList;
 import java.util.List;
 
+//state that allows us to set pos to our servo
 public class ServoState implements State{
 
     State nextState;

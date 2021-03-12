@@ -31,6 +31,8 @@ public class TensorFlowState implements State{
     private TFObjectDetector tfod;
     public int tfodID;
 
+    private ElapsedTime runtime = new ElapsedTime();
+
     public TensorFlowState(int t) {
         tfodID = t;
     }
@@ -59,7 +61,7 @@ public class TensorFlowState implements State{
     }
 
     public State update() {
-        runVuphoria();
+        runVuphoria(5); //this is a test value
 
         return nextState;
     }
@@ -84,9 +86,9 @@ public class TensorFlowState implements State{
         tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
         tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_FIRST_ELEMENT, LABEL_SECOND_ELEMENT);
     }
-    private void runVuphoria(){
+    private void runVuphoria(double timeout){
         boolean active = true;
-        while (active == true) {
+        while (active == true && runtime.seconds() < timeout) {
                 if (tfod != null) {
                     // getUpdatedRecognitions() will return null if no new information is available since
                     // the last time that call was made.
