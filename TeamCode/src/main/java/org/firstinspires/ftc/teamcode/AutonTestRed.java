@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
@@ -21,8 +22,8 @@ author: 7890 Software
 GOALS: Move the foundation, navigate under the bridge
 DESCRIPTION: This code is used for our autonomous when we are located on the side of with the foundation tray.
  */
-@Autonomous(name="auton", group="Iterative Opmode")
-public class AutonomousTest extends OpMode
+@Autonomous(name="auton red", group="Iterative Opmode")
+public class AutonTestRed extends OpMode
 {
 
 
@@ -34,13 +35,27 @@ public class AutonomousTest extends OpMode
     DcMotor leftBack;
     DcMotor rightBack;
     DcMotor center;
+    CRServo wobble;
+
+    ColorSensor tapeSensor;
+    ModernRoboticsI2cRangeSensor distSensor;
+
+    String side = "red";
+
 
     ArrayList<DcMotor> motors = new ArrayList<DcMotor>();
 
     private StateMachine machine;
 
-    EncoderState moveState;
-     TensorFlowState testState;
+    EncoderState moveForwardState;
+    TensorFlowState tfodState;
+    RunToTargetZoneState targetZoneState;
+    CRServoState releaseWobbleGoal;
+    ColorSenseStopState park;
+
+
+    //EncoderState moveState;
+     //TensorFlowState testState;
 
 
     public void init() {
@@ -53,7 +68,9 @@ public class AutonomousTest extends OpMode
         rightBack = hardwareMap.dcMotor.get("right back");
         leftBack = hardwareMap.dcMotor.get("left back");
         center = hardwareMap.dcMotor.get("center");
-        
+
+
+
         /*
         ---MOTOR DIRECTIONS---
          */
@@ -73,10 +90,25 @@ public class AutonomousTest extends OpMode
         /*
         ---USING STATES---
          */
-//The d here is subject to change via testing, just wanted to put it there because it resolved the error and we need one.
-        moveState = new EncoderState(motors, 10, 1.0, "forward");
 
-        moveState.setNextState(null);
+        moveForwardState = new EncoderState(motors, 2, 1.0, "forward"); //change calculations
+        tfodState = new TensorFlowState(hardwareMap.appContext.getResources().getIdentifier(
+                "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
+        targetZoneState = new RunToTargetZoneState(motors, tapeSensor, distSensor, "red");
+        releaseWobbleGoal = new CRServoState(wobble, 2, 100);
+        park = new ColorSenseStopState(motors, tapeSensor, "white", .5, "forward");
+
+
+
+        moveForwardState.setNextState(tfodState);
+        tfodState.setNextState(targetZoneState);
+        targetZoneState.setNextState(releaseWobbleGoal);
+        releaseWobbleGoal.setNextState(park);
+
+//The d here is subject to change via testing, just wanted to put it there because it resolved the error and we need one.
+//        moveState = new EncoderState(motors, 10, 1.0, "forward");
+//
+//        moveState.setNextState(null);
 
 
         /*
@@ -107,9 +139,12 @@ public class AutonomousTest extends OpMode
         Plan B: Just use color sensors
         Plan C: We don't have any sensors so we use encoders
          */
+        /*
         testState = new TensorFlowState(hardwareMap.appContext.getResources().getIdentifier(
                 "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
 
+
+*/
 
 
     }
@@ -117,8 +152,10 @@ public class AutonomousTest extends OpMode
 
     @Override
     public void start(){
-        
-        machine = new StateMachine(moveState);
+
+        wobble.setPower(1); //test value
+
+        machine = new StateMachine(moveForwardState);
 
     }
 

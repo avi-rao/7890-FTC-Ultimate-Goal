@@ -17,7 +17,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RunToTargetZone implements State{
+public class RunToTargetZoneState implements State{
 
     State nextState;
 
@@ -36,7 +36,7 @@ public class RunToTargetZone implements State{
 
    TensorFlowState t = new TensorFlowState(1);
 
-    public RunToTargetZone(ArrayList<DcMotor> motor, ColorSensor cs, ModernRoboticsI2cRangeSensor ds, String s) {
+    public RunToTargetZoneState(ArrayList<DcMotor> motor, ColorSensor cs, ModernRoboticsI2cRangeSensor ds, String s) {
         leftFront = motor.get(0);
         rightFront = motor.get(1);
         leftBack = motor.get(2);
