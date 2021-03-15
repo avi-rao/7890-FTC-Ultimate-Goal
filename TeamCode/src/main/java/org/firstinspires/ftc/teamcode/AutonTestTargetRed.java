@@ -33,6 +33,8 @@ public class AutonTestTargetRed extends OpMode
     /*
     ---MOTORS---
      */
+    ArrayList<DcMotor> motors = new ArrayList<DcMotor>();
+
     DcMotor leftFront;
     DcMotor rightFront;
     DcMotor leftBack;
@@ -40,22 +42,28 @@ public class AutonTestTargetRed extends OpMode
     DcMotor center;
     CRServo wobble;
 
+    /*
+    ---SENSORS---
+     */
     ColorSensor tapeSensor;
     ModernRoboticsI2cRangeSensor distSensor;
 
     String side = "red";
+    // This helps us code for the red side specifically.
 
-
-    ArrayList<DcMotor> motors = new ArrayList<DcMotor>();
-
+    /*
+    ---STATES---
+     */
     private StateMachine machine;
 
     EncoderState moveForwardState;
+    // Moves our robot forward using encoders in order to sense the rings.
     TensorFlowState tfodState;
+    // Senses rings.
     RunToTargetZoneState targetZoneState;
-    //CRServoState releaseWobbleGoal;
+    // CRServoState releaseWobbleGoal;
     ColorSenseStopState park;
-
+    // Stops the robot at the white tape in order to park.
     RunToTargetZoneStateColor tzone;
 
     //EncoderState moveState;
