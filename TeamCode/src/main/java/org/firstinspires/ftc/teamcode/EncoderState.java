@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 import org.firstinspires.ftc.teamcode.StateMachine.State;
 
 import java.util.ArrayList;
@@ -12,7 +11,7 @@ import java.util.ArrayList;
 DESCRIPTION: This code is a distance move state, used to simplify our autonomous code.
 It simply moves the robot according to the directions in our autonomous. It moves it a certain distance using encoders.
  */
-public class EncoderState implements State{
+public class EncoderState implements State {
     //DcMotor
     DcMotor leftFront;
     DcMotor rightFront;
@@ -31,7 +30,7 @@ public class EncoderState implements State{
 
 
     //Setting up encoder variables
-    HardwarePushbot robot   = new HardwarePushbot();   // Use a Pushbot's hardware
+
     private ElapsedTime runtime = new ElapsedTime();
 
     static final double     COUNTS_PER_MOTOR_REV    = 1120;    // eg: TETRIX Motor Encoder
@@ -78,7 +77,7 @@ public class EncoderState implements State{
     public State update(){
 
         encoderDrive(30);
-
+        stop(leftFront, rightFront, leftBack, rightBack, center);
         return nextState;
 
     }
@@ -93,7 +92,7 @@ public class EncoderState implements State{
         rightBack.setTargetPosition(target);
         center.setTargetPosition(target);
 
-
+        runtime.reset();
         if(direc.equals("forward") || direc.equals("backward")) {
             leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -106,12 +105,10 @@ public class EncoderState implements State{
             rightBack.setPower(power);
 
             while (leftFront.isBusy()
-                    || rightFront.isBusy()
-                    || leftBack.isBusy()
-                    || rightBack.isBusy()) {
-                if (runtime.seconds() > timeout) {
-                    break;
-                }
+                    && rightFront.isBusy()
+                    && leftBack.isBusy()
+                    && rightBack.isBusy()
+                    && !(runtime.seconds() > timeout) ) {
             }
         }
         if (direc.equals("left") || direc.equals("right")) {
@@ -119,16 +116,13 @@ public class EncoderState implements State{
 
             center.setPower(power);
 
-            while (center.isBusy()) {
-                if (runtime.seconds() > timeout) {
-                    break;
-                }
+            while (center.isBusy() && !(runtime.seconds() > timeout)) {
             }
+            stop(leftFront, rightFront, leftBack, rightBack, center);
         }
 
-        runtime.reset();
 
-        leftFront.isBusy();
+
 
 
 
@@ -140,7 +134,12 @@ public class EncoderState implements State{
         rightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
     }
-
+    public int GetTarget() {
+        return target;
+    }
+    public int GetPos(){
+        return leftFront.getCurrentPosition();
+    }
 
     public void stop(DcMotor motorlf, DcMotor motorrf, DcMotor motorlb, DcMotor motorrb, DcMotor c) {
         //robot stops moving

@@ -104,6 +104,7 @@ public class AutonTestTargetRed extends OpMode
         /*
         ---USING STATES---
          */
+        moveForwardState = new EncoderState(motors, 5, .5, "forward"); //change calculations
 
         /*
         moveForwardState = new EncoderState(motors, 2, 1.0, "forward"); //change calculations
@@ -114,8 +115,8 @@ public class AutonTestTargetRed extends OpMode
 
          */
 
-        tzone = new RunToTargetZoneStateColor(motors, tapeSensor, "red");
-        park = new ColorSenseStopState(motors, tapeSensor, "white", .5, "backward");
+       // tzone = new RunToTargetZoneStateColor(motors, tapeSensor, "red");
+        //park = new ColorSenseStopState(motors, tapeSensor, "white", .5, "backward");
 
 
 
@@ -126,9 +127,9 @@ public class AutonTestTargetRed extends OpMode
         */
 
         //releaseWobbleGoal.setNextState(park);
-        park.setNextState(null);
-        tzone.setNextState(null);
-
+       // park.setNextState(null);
+        //tzone.setNextState(null);
+        moveForwardState.setNextState(null);
 
     }
 
@@ -137,18 +138,23 @@ public class AutonTestTargetRed extends OpMode
     public void start(){
 
         //wobble.setPower(1); //test value
-
-        machine = new StateMachine(tzone);
+        telemetry.addData("target", moveForwardState.GetTarget());
+        telemetry.addData("position", moveForwardState.GetPos());
+        telemetry.update();
+        machine = new StateMachine(moveForwardState);
 
     }
 
 
 
     public void loop()  {
-
-        machine.update();
-        telemetry.addData("cntr value", tzone.getCntr());
+        telemetry.addData("target", moveForwardState.GetTarget());
+        telemetry.addData("position", moveForwardState.GetPos());
         telemetry.update();
+        machine.update();
+       // telemetry.addData("cntr value", tzone.getCntr());
+       // telemetry.update();
+
 
     }
 
