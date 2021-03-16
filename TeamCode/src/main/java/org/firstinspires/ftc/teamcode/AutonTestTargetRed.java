@@ -48,18 +48,21 @@ public class AutonTestTargetRed extends OpMode
     ColorSensor tapeSensor;
     ModernRoboticsI2cRangeSensor distSensor;
 
-    String side = "red";
     // This helps us code for the red side specifically.
+    String side = "red";
+
 
     /*
     ---STATES---
      */
     private StateMachine machine;
 
-    EncoderState moveForwardState;
+
     // Moves our robot forward using encoders in order to sense the rings.
-    TensorFlowState tfodState;
+    EncoderState moveForwardState;
     // Senses rings.
+    TensorFlowState tfodState;
+
     RunToTargetZoneState targetZoneState;
     // CRServoState releaseWobbleGoal;
     ColorSenseStopState park;
@@ -104,7 +107,7 @@ public class AutonTestTargetRed extends OpMode
         /*
         ---USING STATES---
          */
-        moveForwardState = new EncoderState(motors, 5, .5, "forward"); //change calculations
+        moveForwardState = new EncoderState(motors, 10, .5, "right"); //change calculations
 
         /*
         moveForwardState = new EncoderState(motors, 2, 1.0, "forward"); //change calculations
