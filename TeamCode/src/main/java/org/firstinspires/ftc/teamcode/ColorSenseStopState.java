@@ -86,13 +86,13 @@ public class ColorSenseStopState implements State {
     }
 
     public void move(String direc) {
-        if(direc.equals("backward")) {
+        if(direc.equals("forward")) {
             leftFront.setPower(power);
             rightFront.setPower(power);
             leftBack.setPower(power);
             rightBack.setPower(power);
         }
-        if(direc.equals("forward")) {
+        if(direc.equals("backward")) {
             leftFront.setPower(-power);
             rightFront.setPower(-power);
             leftBack.setPower(-power);

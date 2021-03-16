@@ -28,6 +28,10 @@ DESCRIPTION: This code moves us to the target zone using only a color sensor and
 @Autonomous(name="auton target red", group="Iterative Opmode")
 public class AutonTestTargetRed extends OpMode
 {
+    //TODO: testing all 4 states together
+    //TODO: commenting everything
+    //TODO: blue side
+    //TODO: use range sensor
 
 
     /*
@@ -57,23 +61,26 @@ public class AutonTestTargetRed extends OpMode
      */
     private StateMachine machine;
 
-
     // Moves our robot forward using encoders in order to sense the rings.
     EncoderState moveForwardState;
-    EncoderState moveBackwareState;
     // Senses rings.
     TensorFlowState tfodState;
 
-    TimerTestState zeba;
-
     RunToTargetZoneState targetZoneState;
-    // CRServoState releaseWobbleGoal;
-    ColorSenseStopState park;
+
     // Stops the robot at the white tape in order to park.
+    ColorSenseStopState park;
+
+    /*
+    TimerTestState zeba;
+     CRServoState releaseWobbleGoal;
+
+
     RunToTargetZoneStateColor tzone;
 
-    //EncoderState moveState;
-    //TensorFlowState testState;
+    EncoderState moveState;
+    TensorFlowState testState;
+     */
 
 
     public void init() {
@@ -110,39 +117,54 @@ public class AutonTestTargetRed extends OpMode
         /*
         ---USING STATES---
          */
-        //moveForwardState = new EncoderState(motors, 10, .5, "forward"); //change calculations
+        moveForwardState = new EncoderState(motors, 10, .5, "forward");
+        //TODO: measure field for this, test camera angle of phone.
 
         tfodState = new TensorFlowState(hardwareMap.appContext.getResources().getIdentifier(
                 "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
 
-        zeba = new TimerTestState();
+        targetZoneState = new RunToTargetZoneState(motors, tapeSensor, distSensor, "red");
+        //TODO: make sure robot is actually in target zone when tapeSensor senses red
+        //TODO: make sure strafing a reasonable amount in the beginning of the code
 
-        /*
+        park = new ColorSenseStopState(motors, tapeSensor, "white", .5, "backward");
+        //TODO: the direc in this move method might be wrong, check the state if it moves forward
+
+        /* states we tested lol
+        zeba = new TimerTestState();
         moveForwardState = new EncoderState(motors, 2, 1.0, ""); //change calculations
 
         tfodState = new TensorFlowState(hardwareMap.appContext.getResources().getIdentifier(
                 "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
         targetZoneState = new RunToTargetZoneState(motors, tapeSensor, distSensor, "red");
-        //releaseWobbleGoal = new CRServoState(wobble, 2, 100);
+        releaseWobbleGoal = new CRServoState(wobble, 2, 100);
+        tzone = new RunToTargetZoneStateColor(motors, tapeSensor, "red");
+        park = new ColorSenseStopState(motors, tapeSensor, "white", .5, "backward");
 
          */
 
-       // tzone = new RunToTargetZoneStateColor(motors, tapeSensor, "red");
-        //park = new ColorSenseStopState(motors, tapeSensor, "white", .5, "backward");
-
+        /*
+        ---ORDERING STATES---
+         */
+        moveForwardState.setNextState(tfodState);
+        tfodState.setNextState(targetZoneState);
+        targetZoneState.setNextState(park);
+        park.setNextState(null);
 
 
         /*
         moveForwardState.setNextState(tfodState);
         tfodState.setNextState(targetZoneState);
         targetZoneState.setNextState(null);
-        */
-
         //releaseWobbleGoal.setNextState(park);
        // park.setNextState(null);
         tfodState.setNextState(zeba);
         zeba.setNextState(null);
         //moveForwardState.setNextState(null);
+        */
+
+
+
 
     }
 
@@ -152,25 +174,29 @@ public class AutonTestTargetRed extends OpMode
 
         //wobble.setPower(1); //test value
 
-        machine = new StateMachine(tfodState);
+        machine = new StateMachine(moveForwardState);
 
     }
 
 
 
     public void loop()  {
-//        telemetry.addData("target", moveForwardState.GetTarget());
-//        telemetry.addData("position", moveForwardState.GetPos());
-//        telemetry.update();
+        /* telemetry used during testing
+        telemetry.addData("target", moveForwardState.GetTarget());
+        telemetry.addData("position", moveForwardState.GetPos());
+        telemetry.update();
         telemetry.addData("did it work?", zeba.getSuccess());
         telemetry.update();
+         */
 
         machine.update();
 
+        /* telemetry used during testing
         telemetry.addData("did it work?", zeba.getSuccess());
         telemetry.update();
-       // telemetry.addData("cntr value", tzone.getCntr());
-       // telemetry.update();
+        telemetry.addData("cntr value", tzone.getCntr());
+        telemetry.update();
+         */
 
 
     }

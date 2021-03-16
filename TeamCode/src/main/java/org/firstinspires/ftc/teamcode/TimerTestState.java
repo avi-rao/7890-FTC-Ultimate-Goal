@@ -12,6 +12,11 @@ import org.firstinspires.ftc.teamcode.StateMachine.State;
 
 import java.util.ArrayList;
 import java.util.List;
+/*
+7890 Space Lions 2019 "auton target red"
+author: 7890 Software
+DESCRIPTION: filler state used to test if the time worked in tfodState
+ */
 
 public class TimerTestState implements State {
 
