@@ -16,7 +16,7 @@ import java.util.List;
 
 public class TensorFlowState implements State{
 
-    public static int targetZone = 2; //using a test value for now
+    public static int targetZone = 0; //using a test value for now
 
     State nextState;
 
@@ -87,6 +87,7 @@ public class TensorFlowState implements State{
         tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_FIRST_ELEMENT, LABEL_SECOND_ELEMENT);
     }
     private void runVuphoria(double timeout){
+        runtime.reset();
         boolean active = true;
         while (active == true && runtime.seconds() < timeout) {
                 if (tfod != null) {

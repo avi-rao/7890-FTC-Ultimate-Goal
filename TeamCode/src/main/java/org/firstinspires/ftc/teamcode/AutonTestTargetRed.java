@@ -60,8 +60,11 @@ public class AutonTestTargetRed extends OpMode
 
     // Moves our robot forward using encoders in order to sense the rings.
     EncoderState moveForwardState;
+    EncoderState moveBackwareState;
     // Senses rings.
     TensorFlowState tfodState;
+
+    TimerTestState zeba;
 
     RunToTargetZoneState targetZoneState;
     // CRServoState releaseWobbleGoal;
@@ -107,10 +110,16 @@ public class AutonTestTargetRed extends OpMode
         /*
         ---USING STATES---
          */
-        moveForwardState = new EncoderState(motors, 10, .5, "right"); //change calculations
+        //moveForwardState = new EncoderState(motors, 10, .5, "forward"); //change calculations
+
+        tfodState = new TensorFlowState(hardwareMap.appContext.getResources().getIdentifier(
+                "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
+
+        zeba = new TimerTestState();
 
         /*
-        moveForwardState = new EncoderState(motors, 2, 1.0, "forward"); //change calculations
+        moveForwardState = new EncoderState(motors, 2, 1.0, ""); //change calculations
+
         tfodState = new TensorFlowState(hardwareMap.appContext.getResources().getIdentifier(
                 "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
         targetZoneState = new RunToTargetZoneState(motors, tapeSensor, distSensor, "red");
@@ -131,8 +140,9 @@ public class AutonTestTargetRed extends OpMode
 
         //releaseWobbleGoal.setNextState(park);
        // park.setNextState(null);
-        //tzone.setNextState(null);
-        moveForwardState.setNextState(null);
+        tfodState.setNextState(zeba);
+        zeba.setNextState(null);
+        //moveForwardState.setNextState(null);
 
     }
 
@@ -141,20 +151,24 @@ public class AutonTestTargetRed extends OpMode
     public void start(){
 
         //wobble.setPower(1); //test value
-        telemetry.addData("target", moveForwardState.GetTarget());
-        telemetry.addData("position", moveForwardState.GetPos());
-        telemetry.update();
-        machine = new StateMachine(moveForwardState);
+
+        machine = new StateMachine(tfodState);
 
     }
 
 
 
     public void loop()  {
-        telemetry.addData("target", moveForwardState.GetTarget());
-        telemetry.addData("position", moveForwardState.GetPos());
+//        telemetry.addData("target", moveForwardState.GetTarget());
+//        telemetry.addData("position", moveForwardState.GetPos());
+//        telemetry.update();
+        telemetry.addData("did it work?", zeba.getSuccess());
         telemetry.update();
+
         machine.update();
+
+        telemetry.addData("did it work?", zeba.getSuccess());
+        telemetry.update();
        // telemetry.addData("cntr value", tzone.getCntr());
        // telemetry.update();
 
