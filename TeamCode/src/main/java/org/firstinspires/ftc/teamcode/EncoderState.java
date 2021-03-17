@@ -76,7 +76,7 @@ public class EncoderState implements State {
 
     public State update(){
 
-        encoderDrive(30);
+        encoderDrive(5);
         stop(leftFront, rightFront, leftBack, rightBack, center);
         return nextState;
 
@@ -84,7 +84,12 @@ public class EncoderState implements State {
 
     public void encoderDrive(double timeout) {
 
-        target = leftFront.getCurrentPosition() + (int) (dist * COUNTS_PER_INCH);
+        if(direc.equals("forward") || direc.equals("backward")) {
+            target = leftFront.getCurrentPosition() + (int) (dist * COUNTS_PER_INCH);
+        }
+        else {
+            target = center.getCurrentPosition() + (int) (dist * COUNTS_PER_INCH);
+        }
 
         leftFront.setTargetPosition(target);
         leftBack.setTargetPosition(target);
@@ -93,6 +98,7 @@ public class EncoderState implements State {
         center.setTargetPosition(target);
 
         runtime.reset();
+
         if(direc.equals("forward") || direc.equals("backward")) {
             leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -118,13 +124,8 @@ public class EncoderState implements State {
 
             while (center.isBusy() && !(runtime.seconds() > timeout)) {
             }
-            stop(leftFront, rightFront, leftBack, rightBack, center);
+            //stop(leftFront, rightFront, leftBack, rightBack, center);
         }
-
-
-
-
-
 
         stop(leftFront, rightFront, leftBack, rightBack, center);
 
@@ -132,6 +133,7 @@ public class EncoderState implements State {
         rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         leftBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        center.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
     }
     public int GetTarget() {
