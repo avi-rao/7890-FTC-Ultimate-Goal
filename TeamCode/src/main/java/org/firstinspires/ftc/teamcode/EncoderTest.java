@@ -3,21 +3,14 @@ package org.firstinspires.ftc.teamcode;
 //trying to test stuff without the wobble goal
 
 
-import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import com.qualcomm.robotcore.hardware.DigitalChannel;
-import java.util.ArrayList;
-import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
 
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import java.util.ArrayList;
 
 /*
 7890 Space Lions 2019 "auton target red"
@@ -26,7 +19,7 @@ GOALS: move to the target zone, park
 DESCRIPTION: This code moves us to the target zone using only a color sensor and then parks. We don't use the wobble goal mech in this code
  */
 @Autonomous(name="auton target red", group="Iterative Opmode")
-public class AutonTestTargetRed extends OpMode
+public class EncoderTest extends OpMode
 {
     //TODO: testing all 4 states together
     //TODO: commenting everything
@@ -64,23 +57,7 @@ public class AutonTestTargetRed extends OpMode
     // Moves our robot forward using encoders in order to sense the rings.
     EncoderState moveForwardState;
     // Senses rings.
-    TensorFlowState tfodState;
 
-    RunToTargetZoneStateColor targetZoneState;
-
-    // Stops the robot at the white tape in order to park.
-    ColorSenseStopState park;
-
-    /*
-    TimerTestState zeba;
-     CRServoState releaseWobbleGoal;
-
-
-    RunToTargetZoneStateColor tzone;
-
-    EncoderState moveState;
-    TensorFlowState testState;
-     */
 
 
     public void init() {
@@ -94,9 +71,6 @@ public class AutonTestTargetRed extends OpMode
         leftBack = hardwareMap.dcMotor.get("left back");
         center = hardwareMap.dcMotor.get("center");
 
-        tapeSensor =  hardwareMap.get(ColorSensor.class, "color sensor");
-
-        //distSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "distance sensor");
 
         /*
         ---MOTOR DIRECTIONS---
@@ -118,39 +92,15 @@ public class AutonTestTargetRed extends OpMode
         ---USING STATES---
          */
         //Our robot is as big as a field tile, so we don't really need to move, especially with how our phone is placed.
-      //  moveForwardState = new EncoderState(motors, 10, .5, "forward");
+      moveForwardState = new EncoderState(motors, 10, 1.0, "left");
         //TODO: measure field for this, test camera angle of phone.
 
-        tfodState = new TensorFlowState(hardwareMap.appContext.getResources().getIdentifier(
-                "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
 
-        targetZoneState = new RunToTargetZoneStateColor(motors, tapeSensor, "red");
-        //TODO: make sure robot is actually in target zone when tapeSensor senses red
-        //TODO: make sure strafing a reasonable amount in the beginning of the code
-
-        park = new ColorSenseStopState(motors, tapeSensor, "white", .5, "backward");
-        //TODO: the direc in this move method might be wrong, check the state if it moves forward
-
-        /* states we tested lol
-        zeba = new TimerTestState();
-        moveForwardState = new EncoderState(motors, 2, 1.0, ""); //change calculations
-
-        tfodState = new TensorFlowState(hardwareMap.appContext.getResources().getIdentifier(
-                "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
-        targetZoneState = new RunToTargetZoneState(motors, tapeSensor, distSensor, "red");
-        releaseWobbleGoal = new CRServoState(wobble, 2, 100);
-        tzone = new RunToTargetZoneStateColor(motors, tapeSensor, "red");
-        park = new ColorSenseStopState(motors, tapeSensor, "white", .5, "backward");
-
-         */
 
         /*
         ---ORDERING STATES---
          */
-        moveForwardState.setNextState(tfodState);
-        tfodState.setNextState(targetZoneState);
-        targetZoneState.setNextState(park);
-        park.setNextState(null);
+        moveForwardState.setNextState(null);
 
 
         /*
