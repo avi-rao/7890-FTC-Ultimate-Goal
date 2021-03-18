@@ -22,7 +22,7 @@ public class TeleOpv1 extends OpMode {
 
 
     //DcMotor clawMotor;
-    Servo clawServo;
+    CRServo clawServo;
 
     /*
     ---DIRECTION SETUP---
@@ -41,7 +41,7 @@ public class TeleOpv1 extends OpMode {
         clawMotor = hardwareMap.dcMotor.get("claw motor");
 
         //clawMotor = hardwareMap.dcMotor.get("claw motor");
-        clawServo = hardwareMap.servo.get("claw servo");
+        clawServo = hardwareMap.crservo.get("claw servo");
 
         /*
         ---DIRECTIONS---
@@ -110,6 +110,19 @@ public class TeleOpv1 extends OpMode {
 
 
         clawMotor.setPower((double) gamepad1.left_trigger);
+
+        boolean isOpen = true;
+
+        if(isOpen == true && gamepad1.left_bumper == true) {
+            clawServo.setPower(-1);
+            isOpen=false;
+        }
+        else if (isOpen==false && gamepad1.left_bumper == true) {
+            clawServo.setPower(1);
+            isOpen=true;
+        }
+
+
         //clawMotor.setPower((double) gamepad1.right_trigger);
 
 

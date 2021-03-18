@@ -17,18 +17,24 @@ public class ColorSenseStopState implements State {
     DcMotor rightBack;
     DcMotor center;
 
+    ArrayList<DcMotor> moto = new ArrayList<DcMotor>();
+
     String cval;
     State NextState;
     ColorSensor cs1;
     String dir;
     double power;
     int red;
+
+    //RunToTargetZoneStateColor r = new RunToTargetZoneStateColor(moto, cs1, "red");
     public ColorSenseStopState(ArrayList<DcMotor> motor, ColorSensor colorSensor, String color, double p, String direction){
         leftFront = motor.get(0);
         rightFront = motor.get(1);
         leftBack = motor.get(2);
         rightBack = motor.get(3);
         center = motor.get(4);
+
+        moto = motor;
         cs1 = colorSensor;
         cval = color;
         power = p;
@@ -43,6 +49,8 @@ public class ColorSenseStopState implements State {
     public State update(){
 
         if(cval.equals("red")){
+
+
             move(dir);
 
             if(/*cs1.red()> 1000 && */cs1.red()>=cs1.blue() && cs1.red()>=cs1.green()){
@@ -73,6 +81,23 @@ public class ColorSenseStopState implements State {
             move(dir);
 
             if(cs1.blue() > 500 && cs1.green() > 500 && cs1.red() > 500) { //might need to change value depending on the values we get when testing
+                leftBack.setPower(0);
+                leftFront.setPower(0);
+                rightBack.setPower(0);
+                rightFront.setPower(0);
+                return NextState;
+            }
+            return this;
+        }
+        else if (cval.equals("yellow")) {
+            //if(r.a == true) {
+                //move("backward");
+            //}
+            //else {
+                move(dir);
+            //}
+
+            if(cs1.green() > cs1.blue() && cs1.red() > cs1.blue() && cs1.red() > 100 && cs1.green() > 100) { //might need to change value depending on the values we get when testing
                 leftBack.setPower(0);
                 leftFront.setPower(0);
                 rightBack.setPower(0);

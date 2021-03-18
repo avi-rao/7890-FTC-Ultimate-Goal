@@ -25,8 +25,8 @@ author: 7890 Software
 GOALS: move to the target zone, park
 DESCRIPTION: This code moves us to the target zone using only a color sensor and then parks. We don't use the wobble goal mech in this code
  */
-@Autonomous(name="auton target red", group="Iterative Opmode")
-public class AutonTestTargetRed extends OpMode
+@Autonomous(name="just park", group="Iterative Opmode")
+public class ParkTest extends OpMode
 {
     //TODO: testing all 4 states together
     //TODO: commenting everything
@@ -62,13 +62,13 @@ public class AutonTestTargetRed extends OpMode
     private StateMachine machine;
 
     // Moves our robot forward using encoders in order to sense the rings.
-    EncoderState strafeState;
-    // Senses rings.
-    TensorFlowState tfodState;
-
-    RunToTargetZoneStateColor targetZoneState;
-
-    CRServoState releaseWobbleGoal;
+//    EncoderState strafeState;
+//    // Senses rings.
+//    TensorFlowState tfodState;
+//
+//    RunToTargetZoneStateColor targetZoneState;
+//
+//    CRServoState releaseWobbleGoal;
 
     // Stops the robot at the white tape in order to park.
     ColorSenseStopState park;
@@ -124,17 +124,17 @@ public class AutonTestTargetRed extends OpMode
         //Our robot is as big as a field tile, so we don't really need to move, especially with how our phone is placed.
         //strafeState = new EncoderState(motors, 10, .5, "left");
         //TODO: measure field for this, test camera angle of phone.
+//
+//        tfodState = new TensorFlowState(hardwareMap.appContext.getResources().getIdentifier(
+//                "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
+//
+//        targetZoneState = new RunToTargetZoneStateColor(motors, tapeSensor, "red");
+//        //TODO: make sure robot is actually in target zone when tapeSensor senses red
+//        //TODO: make sure strafing a reasonable amount in the beginning of the code
+//
+//        releaseWobbleGoal = new CRServoState(wobble,1.0,10);
 
-        tfodState = new TensorFlowState(hardwareMap.appContext.getResources().getIdentifier(
-                "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
-
-        targetZoneState = new RunToTargetZoneStateColor(motors, tapeSensor, "red");
-        //TODO: make sure robot is actually in target zone when tapeSensor senses red
-        //TODO: make sure strafing a reasonable amount in the beginning of the code
-
-        releaseWobbleGoal = new CRServoState(wobble,1.0,10);
-
-        park = new ColorSenseStopState(motors, tapeSensor, "yellow", .5, "backward");
+        park = new ColorSenseStopState(motors, tapeSensor, "yellow", .5, "forward");
         //TODO: the direc in this move method might be wrong, check the state if it moves forward
 
         /* states we tested lol
@@ -153,10 +153,10 @@ public class AutonTestTargetRed extends OpMode
         /*
         ---ORDERING STATES---
          */
-        strafeState.setNextState(tfodState);
-        tfodState.setNextState(targetZoneState);
-        targetZoneState.setNextState(releaseWobbleGoal);
-        releaseWobbleGoal.setNextState(park);
+//        strafeState.setNextState(tfodState);
+//        tfodState.setNextState(targetZoneState);
+//        targetZoneState.setNextState(releaseWobbleGoal);
+//        releaseWobbleGoal.setNextState(park);
         park.setNextState(null);
 
 
@@ -182,7 +182,7 @@ public class AutonTestTargetRed extends OpMode
 
         //wobble.setPower(1); //test value
 
-        machine = new StateMachine(tfodState);
+        machine = new StateMachine(park);
 
     }
 

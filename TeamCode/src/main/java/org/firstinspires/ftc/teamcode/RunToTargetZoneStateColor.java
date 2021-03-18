@@ -24,6 +24,8 @@ public class RunToTargetZoneStateColor implements State{
     String side;
 
     int cntr = 0;
+
+    public static boolean a = false;
     //ModernRoboticsI2cRangeSensor distSensor;
 
     //int targetZone = 0;
@@ -75,32 +77,46 @@ public class RunToTargetZoneStateColor implements State{
 
     public void runToA() {
         if(side.equals("red")) {
+            /*
             center.setPower(-1);
             wait(500);
+
+             */
             move("stop");
         }
         if(side.equals("blue")) {
+            /*
             center.setPower(1);
             wait(500);
+
+             */
             move("stop");
         }
 
         runToTape(1);
 
+        move("left");
 
+        a = true;
 
     }
 
     public void runToB() {
         if(side.equals("red")) {
+            /*
             center.setPower(1); //this value is a test value
             wait(500); //this value is a test value
+
+             */
             move("stop");
         }
 
         if(side.equals("blue")) {
+            /*
             center.setPower(-1); //this value is a test value
             wait(500); //this value is a test value
+
+             */
             move("stop");
         }
 
