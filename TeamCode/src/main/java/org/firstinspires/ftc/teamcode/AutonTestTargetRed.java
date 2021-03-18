@@ -62,7 +62,7 @@ public class AutonTestTargetRed extends OpMode
     private StateMachine machine;
 
     // Moves our robot forward using encoders in order to sense the rings.
-    EncoderState moveForwardState;
+    EncoderState strafeState;
     // Senses rings.
     TensorFlowState tfodState;
 
@@ -118,7 +118,7 @@ public class AutonTestTargetRed extends OpMode
         ---USING STATES---
          */
         //Our robot is as big as a field tile, so we don't really need to move, especially with how our phone is placed.
-      //  moveForwardState = new EncoderState(motors, 10, .5, "forward");
+        strafeState = new EncoderState(motors, 10, .5, "left");
         //TODO: measure field for this, test camera angle of phone.
 
         tfodState = new TensorFlowState(hardwareMap.appContext.getResources().getIdentifier(
@@ -147,7 +147,7 @@ public class AutonTestTargetRed extends OpMode
         /*
         ---ORDERING STATES---
          */
-        moveForwardState.setNextState(tfodState);
+        strafeState.setNextState(tfodState);
         tfodState.setNextState(targetZoneState);
         targetZoneState.setNextState(park);
         park.setNextState(null);
@@ -175,7 +175,7 @@ public class AutonTestTargetRed extends OpMode
 
         //wobble.setPower(1); //test value
 
-        machine = new StateMachine(moveForwardState);
+        machine = new StateMachine(strafeState);
 
     }
 

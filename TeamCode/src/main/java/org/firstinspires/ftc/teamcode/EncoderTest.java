@@ -89,7 +89,7 @@ public class EncoderTest extends OpMode
         ---USING STATES---
          */
         //Our robot is as big as a field tile, so we don't really need to move, especially with how our phone is placed.
-      moveForwardState = new EncoderState(motors, 5, 1.0, "left");
+      moveForwardState = new EncoderState(motors, 10, 1.0, "forward");
         //TODO: measure field for this, test camera angle of phone.
 
 
@@ -136,10 +136,12 @@ public class EncoderTest extends OpMode
         telemetry.addData("did it work?", zeba.getSuccess());
         telemetry.update();
          */
-        telemetry.addData("target", moveForwardState.GetTarget());
-        telemetry.addData("position", moveForwardState.GetPos());
+
 
         machine.update();
+
+        telemetry.addData("target", moveForwardState.GetTarget());
+        telemetry.addData("position", moveForwardState.GetPos());
 
         /* telemetry used during testing
         telemetry.addData("did it work?", zeba.getSuccess());

@@ -23,10 +23,14 @@ DESCRIPTION: This code moves us to the target zone using only a color sensor and
 public class ServoTest extends OpMode {
     CRServo wobble;
 
+    DcMotor wobbleMotor;
+
     @Override
     public void init() {
 
-        wobble = hardwareMap.crservo.get("wobble");
+        wobble = hardwareMap.crservo.get("claw servo");
+
+        //wobbleMotor = hardwareMap.dcMotor.get("wobble motor");
 
     }
 
