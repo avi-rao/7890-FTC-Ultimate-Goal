@@ -134,7 +134,7 @@ public class ParkTest extends OpMode
 //
 //        releaseWobbleGoal = new CRServoState(wobble,1.0,10);
 
-        park = new ColorSenseStopState(motors, tapeSensor, "yellow", .5, "forward");
+        park = new ColorSenseStopState(motors, tapeSensor, "yellow", .3, "forward");
         //TODO: the direc in this move method might be wrong, check the state if it moves forward
 
         /* states we tested lol

@@ -92,13 +92,13 @@ public class ColorSenseStopState implements State {
         else if (cval.equals("yellow")) {
             RunToTargetZoneStateColor r = new RunToTargetZoneStateColor(moto, cs1, "red");
             if(r.a == true) {
-                move("backward");
+                move("forward");
             }
             else {
                 move(dir);
             }
 
-            if(cs1.green() > cs1.blue() && cs1.red() > cs1.blue() && cs1.red() > 100 && cs1.green() > 100) { //might need to change value depending on the values we get when testing
+            if(cs1.green() > cs1.blue() && cs1.red() > cs1.blue() && cs1.red() >= 80) { //might need to change value depending on the values we get when testing
                 leftBack.setPower(0);
                 leftFront.setPower(0);
                 rightBack.setPower(0);

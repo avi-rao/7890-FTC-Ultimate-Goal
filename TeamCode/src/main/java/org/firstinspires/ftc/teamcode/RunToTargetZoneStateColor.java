@@ -76,32 +76,37 @@ public class RunToTargetZoneStateColor implements State{
     }
 
     public void runToA() {
-        if(side.equals("red")) {
-            /*
-            center.setPower(-1);
-            wait(500);
-
-             */
-            move("stop");
-        }
-        if(side.equals("blue")) {
-            /*
-            center.setPower(1);
-            wait(500);
-
-             */
-            move("stop");
-        }
-
-        runToTape(1);
-
-        move("left");
-
         a = true;
+//
+//        if(side.equals("red")) {
+//            /*
+//            center.setPower(-1);
+//            wait(500);
+//
+//             */
+//            move("stop");
+//        }
+//        if(side.equals("blue")) {
+//            /*
+//            center.setPower(1);
+//            wait(500);
+//
+//             */
+//            move("stop");
+//        }
+//
+//        runToTape(1);
+//
+
+        //move("left");
+
+
 
     }
 
     public void runToB() {
+        a = true;
+        /*
         if(side.equals("red")) {
 
             center.setPower(1); //this value is a test value
@@ -121,6 +126,7 @@ public class RunToTargetZoneStateColor implements State{
         }
 
         runToTape(1);
+        */
     }
 
     public void runToC() {
