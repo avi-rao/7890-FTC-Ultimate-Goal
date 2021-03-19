@@ -26,7 +26,7 @@ public class ColorSenseStopState implements State {
     double power;
     int red;
 
-    //RunToTargetZoneStateColor r = new RunToTargetZoneStateColor(moto, cs1, "red");
+
     public ColorSenseStopState(ArrayList<DcMotor> motor, ColorSensor colorSensor, String color, double p, String direction){
         leftFront = motor.get(0);
         rightFront = motor.get(1);
@@ -90,12 +90,13 @@ public class ColorSenseStopState implements State {
             return this;
         }
         else if (cval.equals("yellow")) {
-            //if(r.a == true) {
-                //move("backward");
-            //}
-            //else {
+            RunToTargetZoneStateColor r = new RunToTargetZoneStateColor(moto, cs1, "red");
+            if(r.a == true) {
+                move("backward");
+            }
+            else {
                 move(dir);
-            //}
+            }
 
             if(cs1.green() > cs1.blue() && cs1.red() > cs1.blue() && cs1.red() > 100 && cs1.green() > 100) { //might need to change value depending on the values we get when testing
                 leftBack.setPower(0);

@@ -145,7 +145,7 @@ public class RunToTargetZoneStateColor implements State{
             while (cntr < cntrTarget) {
                 //these values are test for setPower. Might want to lower them?
                 move("forward");
-                if(colorSensor.red() > colorSensor.blue() && colorSensor.red() > colorSensor.green()) {
+                if(colorSensor.red() >= colorSensor.blue()) {
                     cntr++;
                     //wait(500); might need lol
                     if(cntr >= cntrTarget) {

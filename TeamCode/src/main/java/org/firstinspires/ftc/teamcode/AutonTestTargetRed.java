@@ -70,7 +70,7 @@ public class AutonTestTargetRed extends OpMode
 
     CRServoState releaseWobbleGoal;
 
-    EncoderState strafeState;
+    //EncoderState strafeState;
 
     // Stops the robot at the white tape in order to park.
     ColorSenseStopState park;
@@ -137,7 +137,7 @@ public class AutonTestTargetRed extends OpMode
 
         releaseWobbleGoal = new CRServoState(wobble,1.0,10);
 
-        strafeState = new EncoderState(motors, 10, .5, "left");
+        //strafeState = new EncoderState(motors, 10, .5, "left");
 
         park = new ColorSenseStopState(motors, tapeSensor, "yellow", .5, "backward");
         //TODO: the direc in this move method might be wrong, check the state if it moves forward
@@ -161,8 +161,8 @@ public class AutonTestTargetRed extends OpMode
         //strafeState.setNextState(tfodState);
         tfodState.setNextState(targetZoneState);
         targetZoneState.setNextState(releaseWobbleGoal);
-        releaseWobbleGoal.setNextState(strafeState);
-        strafeState.setNextState(park);
+        releaseWobbleGoal.setNextState(park);
+        //strafeState.setNextState(park);
         park.setNextState(null);
 
         /*
