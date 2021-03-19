@@ -62,13 +62,15 @@ public class AutonTestTargetRed extends OpMode
     private StateMachine machine;
 
     // Moves our robot forward using encoders in order to sense the rings.
-    EncoderState strafeState;
+    //EncoderState strafeState;
     // Senses rings.
     TensorFlowState tfodState;
 
     RunToTargetZoneStateColor targetZoneState;
 
     CRServoState releaseWobbleGoal;
+
+    EncoderState strafeState;
 
     // Stops the robot at the white tape in order to park.
     ColorSenseStopState park;
@@ -89,6 +91,7 @@ public class AutonTestTargetRed extends OpMode
 
         /*
         ---HARDWARE MAP---
+        erin and avi are big dummyheads >:)
          */
         rightFront = hardwareMap.dcMotor.get("right front");
         leftFront = hardwareMap.dcMotor.get("left front");
@@ -122,7 +125,7 @@ public class AutonTestTargetRed extends OpMode
         ---USING STATES---
          */
         //Our robot is as big as a field tile, so we don't really need to move, especially with how our phone is placed.
-        //strafeState = new EncoderState(motors, 10, .5, "left");
+
         //TODO: measure field for this, test camera angle of phone.
 
         tfodState = new TensorFlowState(hardwareMap.appContext.getResources().getIdentifier(
@@ -133,6 +136,8 @@ public class AutonTestTargetRed extends OpMode
         //TODO: make sure strafing a reasonable amount in the beginning of the code
 
         releaseWobbleGoal = new CRServoState(wobble,1.0,10);
+
+        strafeState = new EncoderState(motors, 10, .5, "left");
 
         park = new ColorSenseStopState(motors, tapeSensor, "yellow", .5, "backward");
         //TODO: the direc in this move method might be wrong, check the state if it moves forward
@@ -150,15 +155,15 @@ public class AutonTestTargetRed extends OpMode
 
          */
 
-        /*
+        /*`
         ---ORDERING STATES---
          */
-        strafeState.setNextState(tfodState);
+        //strafeState.setNextState(tfodState);
         tfodState.setNextState(targetZoneState);
         targetZoneState.setNextState(releaseWobbleGoal);
-        releaseWobbleGoal.setNextState(park);
+        releaseWobbleGoal.setNextState(strafeState);
+        strafeState.setNextState(park);
         park.setNextState(null);
-
 
         /*
         moveForwardState.setNextState(tfodState);

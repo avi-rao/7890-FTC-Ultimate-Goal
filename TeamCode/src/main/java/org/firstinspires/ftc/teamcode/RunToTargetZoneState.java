@@ -32,7 +32,7 @@ public class RunToTargetZoneState implements State{
 
     //int targetZone = 0;
 
-    int power = 1; //might need to change, but if change, must be positive value
+    double power = 0.5; //might need to change, but if change, must be positive value
 
    TensorFlowState t = new TensorFlowState(1);
 
