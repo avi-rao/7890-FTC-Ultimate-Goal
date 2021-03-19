@@ -103,20 +103,20 @@ public class RunToTargetZoneStateColor implements State{
 
     public void runToB() {
         if(side.equals("red")) {
-            /*
+
             center.setPower(1); //this value is a test value
             wait(500); //this value is a test value
 
-             */
+
             move("stop");
         }
 
         if(side.equals("blue")) {
-            /*
+
             center.setPower(-1); //this value is a test value
             wait(500); //this value is a test value
 
-             */
+             
             move("stop");
         }
 
@@ -125,13 +125,13 @@ public class RunToTargetZoneStateColor implements State{
 
     public void runToC() {
         if(side.equals("red")) {
-            center.setPower(-1);
-            wait(500);
+//            center.setPower(1);
+//            wait(500);
             move("stop");
         }
         if(side.equals("blue")) {
-            center.setPower(1);
-            wait(500);
+//            center.setPower(-1);
+//            wait(500);
             move("stop");
         }
 
