@@ -17,7 +17,7 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 /*
-7890 Space Lions 2019 "auton  red"
+7890 Space Lions 2019 "auton test red"
 author: 7890 Software
 GOALS: move wobble goal to the target zone, park
 DESCRIPTION: This code moves us to the target zone using a color sensor and dist sensor and then parks
@@ -37,26 +37,37 @@ public class AutonTestRed extends OpMode
     DcMotor center;
     CRServo wobble;
 
+    /*
+    ---SENSORS---
+     */
+
     ColorSensor tapeSensor;
     ModernRoboticsI2cRangeSensor distSensor;
 
-    String side = "red";
+    /*
+    The string "side" allows us to define when we're on the red or blue side of the field,
+    as the code for the blue side requires the color sensor to sense blue and our robot to strafe
+    (move sideways) in a different direction than when we are on the red side. In this case,
+    we are coding for the red side.
+     */
 
+    String side = "red";
 
     ArrayList<DcMotor> motors = new ArrayList<DcMotor>();
 
     private StateMachine machine;
+
+    // Here we have declared our states and ordered our states.
+
+    /* EncoderState tells the wheels of the robot to complete a certain amount of rotations, rather
+    than moving for specific time intervals. For more information, see EncoderState class.
+     */
 
     EncoderState moveForwardState;
     TensorFlowState tfodState;
     RunToTargetZoneState targetZoneState;
     CRServoState releaseWobbleGoal;
     ColorSenseStopState park;
-
-
-    //EncoderState moveState;
-     //TensorFlowState testState;
-
 
     public void init() {
 
@@ -69,7 +80,9 @@ public class AutonTestRed extends OpMode
         leftBack = hardwareMap.dcMotor.get("left back");
         center = hardwareMap.dcMotor.get("center");
 
+        tapeSensor =  hardwareMap.get(ColorSensor.class, "color sensor");
 
+        wobble = hardwareMap.crservo.get("claw servo");
 
         /*
         ---MOTOR DIRECTIONS---
@@ -91,14 +104,17 @@ public class AutonTestRed extends OpMode
         ---USING STATES---
          */
 
-        moveForwardState = new EncoderState(motors, 2, 1.0, "forward"); //change calculations
+        /*
+        Having declared our states, we now initialize the states and set parameters. For more
+        information, look at each respective state class.
+         */
+
+        moveForwardState = new EncoderState(motors, 2, 1.0, "forward");
         tfodState = new TensorFlowState(hardwareMap.appContext.getResources().getIdentifier(
                 "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
         targetZoneState = new RunToTargetZoneState(motors, tapeSensor, distSensor, "red");
         releaseWobbleGoal = new CRServoState(wobble, 2, 100);
         park = new ColorSenseStopState(motors, tapeSensor, "white", .5, "forward");
-
-
 
         moveForwardState.setNextState(tfodState);
         tfodState.setNextState(targetZoneState);
@@ -109,7 +125,6 @@ public class AutonTestRed extends OpMode
 //        moveState = new EncoderState(motors, 10, 1.0, "forward");
 //
 //        moveState.setNextState(null);
-
 
         /*
         The auton plan:
@@ -142,16 +157,15 @@ public class AutonTestRed extends OpMode
         /*
         testState = new TensorFlowState(hardwareMap.appContext.getResources().getIdentifier(
                 "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
-
-
 */
-
 
     }
 
 
     @Override
     public void start(){
+
+        // Starts the robot.
 
         wobble.setPower(1); //test value
 
@@ -163,9 +177,14 @@ public class AutonTestRed extends OpMode
 
     public void loop()  {
 
+        // Constantly checks for updates and makes sure our robot is always running a state.
+
         machine.update();
 
     }
+
+
+    // Allows robot to wait before continuing on to the next method.
 
     public void wait(int time) {
         try {

@@ -21,22 +21,34 @@ public class RunToTargetZoneState implements State{
 
     State nextState;
 
+    /*
+    ---MOTORS---
+     */
+
     DcMotor leftFront;
     DcMotor rightFront;
     DcMotor leftBack;
     DcMotor rightBack;
     DcMotor center;
+
+    /*
+    ---SENSORS---
+     */
+
     ColorSensor colorSensor;
-    String side;
     ModernRoboticsI2cRangeSensor distSensor;
 
-    //int targetZone = 0;
+    String side;
 
-    double power = 0.5; //might need to change, but if change, must be positive value
+    double power = 0.5;
 
    TensorFlowState t = new TensorFlowState(1);
 
-    public RunToTargetZoneState(ArrayList<DcMotor> motor, ColorSensor cs, ModernRoboticsI2cRangeSensor ds, String s) {
+   /* This is a constructor. In this constructor, we set up parameters for our RunToTargetZoneState
+   so that we can assign specific objects to it in our AutonTestRed class.
+    */
+
+   public RunToTargetZoneState(ArrayList<DcMotor> motor, ColorSensor cs, ModernRoboticsI2cRangeSensor ds, String s) {
         leftFront = motor.get(0);
         rightFront = motor.get(1);
         leftBack = motor.get(2);
@@ -57,6 +69,11 @@ public class RunToTargetZoneState implements State{
 
     }
 
+    /* This if statement allows the robot to determine which target zone to run to after scanning
+    the rings. We use TensorFlow state to sense the number of rings, and depending on the number of
+    rings it senses, the robot will run the method that corresponds to that number of rings.
+     */
+
     public void start(){
         if (t.targetZone == 2) {
             runToC();
@@ -76,6 +93,8 @@ public class RunToTargetZoneState implements State{
         return nextState;
     }
 
+    //This is the method run when we need to go to target zone A.
+
     public void runToA() {
         if(side.equals("red")) {
             center.setPower(-1);
@@ -88,9 +107,9 @@ public class RunToTargetZoneState implements State{
             runToTape();
         }
 
-
-
     }
+
+    //This is the method run when we need to go to target zone B.
 
     public void runToB() {
         if(side.equals("red")) {
@@ -106,6 +125,9 @@ public class RunToTargetZoneState implements State{
         }
     }
 
+    //This is the method run when we need to go to target zone C. Unlike the other two, it uses a
+    // distance sensor to get to the target zone.
+
     public void runToC() {
         if(side.equals("red")) {
             center.setPower(-1);
@@ -116,30 +138,34 @@ public class RunToTargetZoneState implements State{
             wait(500);
         }
 
-        while(distSensor.getDistance(DistanceUnit.INCH) > 5) {//target distance to be tested
+        while(distSensor.getDistance(DistanceUnit.INCH) > 5) {
             move("forward");
         }
-        //might need a lol :(
         move("stop");
     }
+
+    // This method is used in all the previous methods, and it allows us to sense and stop at tape.
 
     public void runToTape() { //Robot runs forward until the first colored tape it senses
         if (side.equals("red")) { //the colored tape will stop at red tape
             while (colorSensor.blue() > colorSensor.red() || colorSensor.green() > colorSensor.red()) {
-                //these values are test for setPower. Might want to lower them?
                 move("forward");
             }
-            //wait(500); might need lol
             move("stop");
         }
         if(side.equals("blue")) { //the robot will stop at blue tape
             while (colorSensor.red() > colorSensor.blue() || colorSensor.green() > colorSensor.blue()) {
-                //these values are test for setPower. Might want to lower them?
                 move("forward");
             }
             move("stop");
         }
     }
+
+    /*
+    ---MOVE---
+     */
+
+    // This method allows our robot to make basic movements.
 
     public void move(String direc) {
         if(direc.equals("forward")) {
@@ -170,6 +196,7 @@ public class RunToTargetZoneState implements State{
 
     }
 
+    // Allows robot to wait before continuing on to the next method.
 
     public void wait(int time) { //time is in milliseconds
         try {
