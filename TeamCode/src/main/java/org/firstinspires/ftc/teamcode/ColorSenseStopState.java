@@ -11,20 +11,26 @@ author: 7890 Software
 DESCRIPTION: robot moves in a direction until the color sensor senses the appropriate color
  */
 public class ColorSenseStopState implements State {
+    /*
+    ---MOTORS---
+     */
     DcMotor leftFront;
     DcMotor rightFront;
     DcMotor leftBack;
     DcMotor rightBack;
     DcMotor center;
-
     ArrayList<DcMotor> moto = new ArrayList<DcMotor>();
 
+    //Color we're trying to sense for
     String cval;
-    State NextState;
+    //Color sensor we use to sense colors
     ColorSensor cs1;
+    //Direction we move in until we sense the color cval
     String dir;
+    //Power that our motors move at
     double power;
-    int red;
+
+    State NextState;
 
 
     public ColorSenseStopState(ArrayList<DcMotor> motor, ColorSensor colorSensor, String color, double p, String direction){
@@ -39,7 +45,6 @@ public class ColorSenseStopState implements State {
         cval = color;
         power = p;
         dir = direction;
-        //red = cs1.red();
     }
 
     public void setNextState(State state) {
@@ -50,7 +55,6 @@ public class ColorSenseStopState implements State {
 
         if(cval.equals("red")){
 
-
             move(dir);
 
             if(/*cs1.red()> 1000 && */cs1.red()>=cs1.blue() && cs1.red()>=cs1.green()){
@@ -60,10 +64,10 @@ public class ColorSenseStopState implements State {
                 rightFront.setPower(0);
                 return NextState;
             }
-
             return this;
         }
         else if(cval.equals("blue")){
+
             move(dir);
 
             if(/*cs1.blue()> 1000 &&*/ cs1.blue()>=cs1.red() && cs1.blue()>=cs1.green()){
@@ -73,11 +77,10 @@ public class ColorSenseStopState implements State {
                 rightFront.setPower(0);
                 return NextState;
             }
-
-
             return this;
         }
         else if (cval.equals("white")) {
+
             move(dir);
 
             if(cs1.blue() > 500 && cs1.green() > 500 && cs1.red() > 500) { //might need to change value depending on the values we get when testing
@@ -107,10 +110,10 @@ public class ColorSenseStopState implements State {
             }
             return this;
         }
-
         return this;
     }
 
+    //Basic movement method
     public void move(String direc) {
         if(direc.equals("forward")) {
             leftFront.setPower(power);
@@ -137,12 +140,6 @@ public class ColorSenseStopState implements State {
             rightBack.setPower(0);
             center.setPower(0);
         }
-
-    }
-
-    public int getColor(){
-
-        return cs1.red();
 
     }
 

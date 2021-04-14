@@ -5,7 +5,11 @@ import com.qualcomm.robotcore.hardware.CRServo;
 
 import org.firstinspires.ftc.teamcode.StateMachine.State;
 
-///state that allows us to set power to our cr servo
+/*
+7890 Space Lions 2019 "color sense stop state"
+author: 7890 Software
+DESCRIPTION: allows us to set power to our CRServo (open and close the wobble goal mech)
+ */
 public class CRServoState implements State{
 
     State nextState;

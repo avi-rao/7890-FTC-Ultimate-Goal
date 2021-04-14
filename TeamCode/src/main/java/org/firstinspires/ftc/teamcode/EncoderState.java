@@ -8,20 +8,25 @@ import org.firstinspires.ftc.teamcode.StateMachine.State;
 import java.util.ArrayList;
 
 /*
+7890 Space Lions 2019 "color sense stop state"
+author: 7890 Software
 DESCRIPTION: This code is a distance move state, used to simplify our autonomous code.
 It simply moves the robot according to the directions in our autonomous. It moves it a certain distance using encoders.
  */
 public class EncoderState implements State {
-    //DcMotor
+    /*
+    ---Motors---
+     */
     DcMotor leftFront;
     DcMotor rightFront;
     DcMotor leftBack;
     DcMotor rightBack;
     DcMotor center;
 
+    //The distance we want to travel, the speed we want to move at, and the distance translated into
+    //an encoder target
     double dist;
     double power;
-
     int target;
 
     String direc;
@@ -29,10 +34,9 @@ public class EncoderState implements State {
     State nextState;
 
 
-    //Setting up encoder variables
-
     private ElapsedTime runtime = new ElapsedTime();
 
+    //Setting up encoder variables
     static final double     COUNTS_PER_MOTOR_REV    = 1120;    // eg: TETRIX Motor Encoder
     static final double     DRIVE_GEAR_REDUCTION    = 1.0;     // This is < 1.0 if geared UP
     static final double     WHEEL_DIAMETER_INCHES   = 4.0;     // For figuring circumference

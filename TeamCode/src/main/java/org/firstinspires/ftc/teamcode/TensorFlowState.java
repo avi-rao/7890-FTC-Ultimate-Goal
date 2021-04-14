@@ -14,6 +14,11 @@ import org.firstinspires.ftc.teamcode.StateMachine.State;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+7890 Space Lions 2019 "color sense stop state"
+author: 7890 Software
+DESCRIPTION: robot senses the number of rings and stores that value in targetZone
+ */
 public class TensorFlowState implements State{
 
     public static int targetZone = 0; //using a test value for now
@@ -39,7 +44,6 @@ public class TensorFlowState implements State{
 
     public void setNextState(State state) {
         nextState  = state;
-
     }
 
     public void start(){
