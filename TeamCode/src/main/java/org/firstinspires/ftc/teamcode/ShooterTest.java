@@ -12,10 +12,13 @@ import com.qualcomm.robotcore.util.ElapsedTime;
         private ElapsedTime runtime = new ElapsedTime();
 
 
-        DcMotor wheel;
+        DcMotor wheell;
+        DcMotor wheelr;
+
         @Override
         public void init() {
-            wheel = hardwareMap.dcMotor.get("shooter motor");
+            wheell = hardwareMap.dcMotor.get("shooter motor left");
+            wheelr = hardwareMap.dcMotor.get("shooter motor right");
         }
 
         /*
@@ -28,12 +31,17 @@ import com.qualcomm.robotcore.util.ElapsedTime;
         /*
         ---DIRECTIONS---
          */
-            //make it so that positive moves forward, negative moves backwards
+        //make it so that positive moves forward, negative moves backwards
 
         @Override
-        public void loop(){
+        public void loop() {
+            wheell.setPower((double) gamepad1.right_trigger);
+            wheelr.setPower((double) -gamepad1.right_trigger);
+        }
+    }
+            /*
 
-            if (gamepad1.a == true) {
+           if (gamepad1.a == true) {
                wheel.setPower(1);
             }
             else if (gamepad1.a == false) {
@@ -44,10 +52,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
             }
           //  else if (gamepad1)
 
-
-        }
-
+             */
 
 
-
-    }
