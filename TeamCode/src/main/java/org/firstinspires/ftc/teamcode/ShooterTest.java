@@ -12,13 +12,13 @@ import com.qualcomm.robotcore.util.ElapsedTime;
         private ElapsedTime runtime = new ElapsedTime();
 
 
-        DcMotor wheell;
-        DcMotor wheelr;
+        DcMotor ShooterWheel;
+
 
         @Override
         public void init() {
-            wheell = hardwareMap.dcMotor.get("shooter motor left");
-            wheelr = hardwareMap.dcMotor.get("shooter motor right");
+            ShooterWheel = hardwareMap.dcMotor.get("shooter motor");
+
         }
 
         /*
@@ -35,8 +35,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
         @Override
         public void loop() {
-            wheell.setPower((double) gamepad1.right_trigger);
-            wheelr.setPower((double) -gamepad1.right_trigger);
+            ShooterWheel.setPower((double) gamepad1.right_trigger);
         }
     }
             /*
