@@ -34,8 +34,17 @@ import com.qualcomm.robotcore.util.ElapsedTime;
         //make it so that positive moves forward, negative moves backwards
 
         @Override
-        public void loop() {
-            ShooterWheel.setPower((double) gamepad1.right_trigger);
+        public void loop(){
+        if (gamepad1.a == true) {
+            ShooterWheel.setPower(1);
+        }
+            else if (gamepad1.a == false) {
+            ShooterWheel.setPower(0);
+        }
+            if (gamepad1.b == true) {
+            ShooterWheel.setPower(-1);
+        }
+        // public void loop() { ShooterWheel.setPower((double) gamepad1.right_trigger);
         }
     }
             /*
