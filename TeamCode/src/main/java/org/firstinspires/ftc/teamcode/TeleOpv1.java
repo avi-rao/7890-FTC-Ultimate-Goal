@@ -25,7 +25,7 @@ public class TeleOpv1 extends OpMode {
     ---WOBBLE GOAL MOTORS & SERVOS---
      */
     DcMotor clawMotor;
-    CRServo clawServo;
+    //CRServo clawServo;
 
     /*
     ---DIRECTION SETUP---
@@ -46,7 +46,7 @@ public class TeleOpv1 extends OpMode {
         center = hardwareMap.dcMotor.get("center");
 
         clawMotor = hardwareMap.dcMotor.get("claw motor");
-        clawServo = hardwareMap.crservo.get("claw servo");
+        //clawServo = hardwareMap.crservo.get("claw servo");
 
         /*
         ---DIRECTIONS---
@@ -82,11 +82,12 @@ public class TeleOpv1 extends OpMode {
         ---WOBBLE GOAL MECHANISM---
          */
         //We control the movement of the "wrist" using a trigger
-        clawMotor.setPower((double) gamepad1.left_trigger);
+        clawMotor.setPower((double) -gamepad1.left_trigger);
 
         //isOpen keeps track of if the claw is open or closed
         boolean isOpen = true;
 
+        /*
         //Let's us open and close the claw using just one button (the left bumper)
         if(isOpen == true && gamepad1.left_bumper == true) {
             clawServo.setPower(-1);
@@ -96,5 +97,7 @@ public class TeleOpv1 extends OpMode {
             clawServo.setPower(1);
             isOpen = true;
         }
+
+         */
     }
 }
