@@ -87,7 +87,7 @@ public class TeleOpv1 extends OpMode {
         //isOpen keeps track of if the claw is open or closed
         boolean isOpen = true;
 
-        /*
+
         //Let's us open and close the claw using just one button (the left bumper)
         if(isOpen == true && gamepad1.left_bumper == true) {
             clawServo.setPower(-1);
@@ -98,6 +98,6 @@ public class TeleOpv1 extends OpMode {
             isOpen = true;
         }
 
-         */
+
     }
 }
