@@ -93,7 +93,7 @@ public class TeleOpv1 extends OpMode {
             clawServo.setPower(-1);
             isOpen = false;
         }
-        else if (!isOpen && gamepad1.left_bumper == true) {
+        else if (isOpen == false && gamepad1.left_bumper == true) {
             clawServo.setPower(1);
             isOpen = true;
         }
