@@ -25,7 +25,7 @@ public class TeleOpv1 extends OpMode {
     ---WOBBLE GOAL MOTORS & SERVOS---
      */
     DcMotor clawMotor;
-    //CRServo clawServo;
+    CRServo clawServo;
 
     /*
     ---DIRECTION SETUP---
