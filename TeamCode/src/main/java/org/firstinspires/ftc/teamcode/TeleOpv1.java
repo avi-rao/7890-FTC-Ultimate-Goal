@@ -62,6 +62,14 @@ public class TeleOpv1 extends OpMode {
     @Override
     public void loop() {
 
+        boolean slow = false;
+
+        if (gamepad1.b && !slow) {
+            slow = true;
+        }
+        else if (gamepad1.b && slow) {
+            slow = false;
+        }
         /*
         ---DRIVE TRAIN---
          */
@@ -69,23 +77,33 @@ public class TeleOpv1 extends OpMode {
         double strafe = (double) gamepad1.left_stick_x; //sets strafe to the value of the left joystick x axis
         double turn = (double) gamepad1.right_stick_x; //sets turn to the value of the right joystick x axis
 
-        //Calculations so that we can do more complex movements than just the cardinal directions such as:
-        //move diagonally, turn while moving, etc.
-        leftFront.setPower(drive + turn/2);
-        leftBack.setPower(drive + turn/2);
-        rightFront.setPower(drive - turn/2);
-        rightBack.setPower(drive - turn/2);
 
-        center.setPower(strafe);
+            //Calculations so that we can do more complex movements than just the cardinal directions such as:
+            //move diagonally, turn while moving, etc.
+            leftFront.setPower(drive + turn / 2);
+            leftBack.setPower(drive + turn / 2);
+            rightFront.setPower(drive - turn / 2);
+            rightBack.setPower(drive - turn / 2);
 
+            center.setPower(strafe);
+
+        if (!slow) {
         /*
         ---WOBBLE GOAL MECHANISM---
          */
-        //We control the movement of the "wrist" using a trigger
-        clawMotor.setPower((double)gamepad1.right_trigger - (double)gamepad1.left_trigger);
+            //We control the movement of the "wrist" using a trigger
+            clawMotor.setPower((double) gamepad1.right_trigger - (double) gamepad1.left_trigger);
 
-        //isOpen keeps track of if the claw is open or closed
-        boolean isOpen = true;
+            //isOpen keeps track of if the claw is open or closed
+            boolean isOpen = true;
+
+        }
+
+        if (slow) {
+            clawMotor.setPower(.25 * ((double) gamepad1.right_trigger - (double) gamepad1.left_trigger));
+
+
+        }
 
         /*
 
