@@ -81,6 +81,7 @@ public class AutonTestRed extends OpMode
         center = hardwareMap.dcMotor.get("center");
 
         tapeSensor =  hardwareMap.get(ColorSensor.class, "color sensor");
+        distSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "dist sensor");
 
         wobble = hardwareMap.crservo.get("claw servo");
 
@@ -98,7 +99,7 @@ public class AutonTestRed extends OpMode
         motors.add(rightBack);
         motors.add(leftBack);
         motors.add(center);
-       
+
 
         /*
         ---USING STATES---
@@ -128,7 +129,6 @@ public class AutonTestRed extends OpMode
 
         /*
         The auton plan:
-
         1. close the claw (servo)
         2. move to position to sense rings
             - strafe to the right (or we can turn)
@@ -136,20 +136,15 @@ public class AutonTestRed extends OpMode
         3. sense rings somehow
         4. figure out which target zone we go to
         5.
-
-
         How do we know if we're in the target zone?
             - use distance sensor
             - use color sensor
             - use encoders to know how far we've travelled
-
         How can we differentiate each target zone?
             - use color sensor to sense how many tiles we've moved (by counting the number of times we cross a red tape)
             - target C : use the distance sensor
               target zone A and B: use color sensor. (phone is on side of the robot, so we can either strafe backwards or just move backwards)
             - use an x-rail and a color sensor on the bottom to sense each line to know which target zone we're at
-
-
         Plan A: Write color sensor state and implement it. When the distance sensors (range sensors) come in, use that to sense target zone C
         Plan B: Just use color sensors
         Plan C: We don't have any sensors so we use encoders
