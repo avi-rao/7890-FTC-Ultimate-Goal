@@ -44,7 +44,7 @@ public class RunToTargetZoneState implements State{
     //side allows us to switch the code depending on what color side we're on
     String side;
     //power is the power we will set our motors to
-    double power = .8;
+    double power = 1;
 
     //Allows us to get the variable targetZone
     TensorFlowState t = new TensorFlowState(1);

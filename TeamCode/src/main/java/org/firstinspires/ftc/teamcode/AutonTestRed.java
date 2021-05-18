@@ -36,7 +36,6 @@ public class AutonTestRed extends OpMode
     DcMotor rightBack;
     DcMotor center;
     DcMotor wobble;
-
     /*
     ---SENSORS---
      */
@@ -80,6 +79,7 @@ public class AutonTestRed extends OpMode
         rightBack = hardwareMap.dcMotor.get("right back");
         leftBack = hardwareMap.dcMotor.get("left back");
         center = hardwareMap.dcMotor.get("center");
+
 
         tapeSensor =  hardwareMap.get(ColorSensor.class, "color sensor");
         distSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "dist sensor");
