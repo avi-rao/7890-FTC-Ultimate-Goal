@@ -44,10 +44,12 @@ public class RunToTargetZoneState implements State{
     //side allows us to switch the code depending on what color side we're on
     String side;
     //power is the power we will set our motors to
-    double power = 0.5;
+    double power = .8;
 
     //Allows us to get the variable targetZone
     TensorFlowState t = new TensorFlowState(1);
+
+    public static boolean a = false;
 
    /*
    This is a constructor. In this constructor, we set up parameters for our RunToTargetZoneState
@@ -97,9 +99,11 @@ public class RunToTargetZoneState implements State{
 
     //This is the method run when we need to go to target zone A.
     public void runToA() {
+        a = true;
         if(side.equals("red")) {
-            center.setPower(1);
+            center.setPower(-1);
             wait(500);
+            center.setPower(0);
             runToTape();
         }
         if(side.equals("blue")) {
@@ -107,6 +111,7 @@ public class RunToTargetZoneState implements State{
             wait(500);
             runToTape();
         }
+
 
     }
 
@@ -129,8 +134,9 @@ public class RunToTargetZoneState implements State{
     // distance sensor to get to the target zone.
     public void runToC() {
         if(side.equals("red")) {
-            center.setPower(1);
+            center.setPower(-1);
             wait(500);
+            center.setPower(0);
         }
         if(side.equals("blue")) {
             center.setPower(1);
@@ -145,7 +151,7 @@ public class RunToTargetZoneState implements State{
     // This method is used in all the previous methods, and it allows us to sense and stop at tape.
     public void runToTape() { //Robot runs forward until the first colored tape it senses
         if (side.equals("red")) { //the colored tape will stop at red tape
-            while (colorSensor.blue() > colorSensor.red() || colorSensor.red() < 90 /*colorSensor.green() > colorSensor.red()*/) {
+            while (colorSensor.blue() > colorSensor.red() || colorSensor.red() < 90 || colorSensor.red() > 100/*colorSensor.green() > colorSensor.red()*/) {
                 move("forward");
             }
             move("stop");

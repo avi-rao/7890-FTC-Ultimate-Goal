@@ -65,7 +65,7 @@ public class TensorFlowState implements State{
     }
 
     public State update() {
-        runVuphoria(5); //this is a test value
+        runVuphoria(2); //this is a test value
 
         return nextState;
     }
@@ -101,8 +101,12 @@ public class TensorFlowState implements State{
                     if (updatedRecognitions != null) {
                         if (updatedRecognitions.size() == 0 ) {
 
+                            /*
                             targetZone = 0;
                             active = false; //TODO: let's try this
+                            break;
+
+                             */
 
                             // empty list.  no objects recognized.
                         } else {

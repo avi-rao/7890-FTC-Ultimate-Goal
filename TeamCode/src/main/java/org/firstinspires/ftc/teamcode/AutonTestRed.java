@@ -35,7 +35,7 @@ public class AutonTestRed extends OpMode
     DcMotor leftBack;
     DcMotor rightBack;
     DcMotor center;
-    CRServo wobble;
+    DcMotor wobble;
 
     /*
     ---SENSORS---
@@ -66,9 +66,10 @@ public class AutonTestRed extends OpMode
     EncoderState moveForwardState;
     TensorFlowState tfodState;
     RunToTargetZoneState targetZoneState;
-    CRServoState releaseWobbleGoal;
+    //CRServoState releaseWobbleGoal;
     ColorSenseStopState park;
 
+    //EncoderState tfodTest;
     public void init() {
 
         /*
@@ -83,13 +84,13 @@ public class AutonTestRed extends OpMode
         tapeSensor =  hardwareMap.get(ColorSensor.class, "color sensor");
         distSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "dist sensor");
 
-        wobble = hardwareMap.crservo.get("claw servo");
+        wobble = hardwareMap.dcMotor.get("claw motor");
 
         /*
         ---MOTOR DIRECTIONS---
          */
-        rightBack.setDirection(DcMotor.Direction.REVERSE);
-        rightFront.setDirection(DcMotor.Direction.REVERSE);
+        leftFront.setDirection(DcMotor.Direction.REVERSE);
+        leftBack.setDirection(DcMotor.Direction.REVERSE);
 
         /*
         ---GROUPING---
@@ -110,17 +111,27 @@ public class AutonTestRed extends OpMode
         information, look at each respective state class.
          */
 
-        //moveForwardState = new EncoderState(motors, 2, 1.0, "forward");
+        moveForwardState = new EncoderState(motors, 10, 0.3, "forward");
         tfodState = new TensorFlowState(hardwareMap.appContext.getResources().getIdentifier(
                 "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
+
+        //tfodTest = new EncoderState(motors, 10, 0.3, "forward");
+
         targetZoneState = new RunToTargetZoneState(motors, tapeSensor, distSensor, "red");
-        releaseWobbleGoal = new CRServoState(wobble, 2, 100);
-        park = new ColorSenseStopState(motors, tapeSensor, "white", .5, "backward");
+        //releaseWobbleGoal = new CRServoState(wobble, 2, 100);
+        park = new ColorSenseStopState(motors, tapeSensor, "yellow", .5, "backward");
 
         moveForwardState.setNextState(tfodState);
         tfodState.setNextState(targetZoneState);
-        targetZoneState.setNextState(releaseWobbleGoal);
-        releaseWobbleGoal.setNextState(park);
+        targetZoneState.setNextState(park);
+        park.setNextState(null);
+
+
+
+      //  targetZoneState.setNextState(park);
+        //releaseWobbleGoal.setNextState(park);
+
+
 
 //The d here is subject to change via testing, just wanted to put it there because it resolved the error and we need one.
 //        moveState = new EncoderState(motors, 10, 1.0, "forward");
@@ -162,7 +173,8 @@ public class AutonTestRed extends OpMode
 
         // Starts the robot.
 
-        wobble.setPower(1); //test value
+
+
 
         machine = new StateMachine(moveForwardState);
 

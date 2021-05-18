@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import java.util.ArrayList;
@@ -29,6 +30,8 @@ public class ColorSenseStopState implements State {
     String dir;
     //Power that our motors move at
     double power;
+
+    ModernRoboticsI2cRangeSensor mr;
 
     State NextState;
 
@@ -93,15 +96,15 @@ public class ColorSenseStopState implements State {
             return this;
         }
         else if (cval.equals("yellow")) {
-            RunToTargetZoneStateColor r = new RunToTargetZoneStateColor(moto, cs1, "red");
-            if(r.a == true) {
+            RunToTargetZoneState r = new RunToTargetZoneState(moto, cs1, mr, "red");
+            if(r.a) {
                 move("forward");
             }
             else {
                 move(dir);
             }
 
-            if(cs1.green() > cs1.blue() && cs1.red() > cs1.blue() && cs1.red() >= 80) { //might need to change value depending on the values we get when testing
+            if(cs1.green() > cs1.blue() && cs1.red() > cs1.blue() && cs1.red() >= 100) { //might need to change value depending on the values we get when testing
                 leftBack.setPower(0);
                 leftFront.setPower(0);
                 rightBack.setPower(0);
