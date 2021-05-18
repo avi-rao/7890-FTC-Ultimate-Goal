@@ -98,12 +98,12 @@ public class RunToTargetZoneState implements State{
     //This is the method run when we need to go to target zone A.
     public void runToA() {
         if(side.equals("red")) {
-            center.setPower(-1);
+            center.setPower(1);
             wait(500);
             runToTape();
         }
         if(side.equals("blue")) {
-            center.setPower(1);
+            center.setPower(-1);
             wait(500);
             runToTape();
         }
@@ -113,13 +113,13 @@ public class RunToTargetZoneState implements State{
     //This is the method run when we need to go to target zone B.
     public void runToB() {
         if(side.equals("red")) {
-            center.setPower(1); //this value is a test value
+            //center.setPower(1); //this value is a test value
             wait(500); //this value is a test value
             runToTape();
         }
 
         if(side.equals("blue")) {
-            center.setPower(-1); //this value is a test value
+            //center.setPower(-1); //this value is a test value
             wait(500); //this value is a test value
             runToTape();
         }
@@ -129,7 +129,7 @@ public class RunToTargetZoneState implements State{
     // distance sensor to get to the target zone.
     public void runToC() {
         if(side.equals("red")) {
-            center.setPower(-1);
+            center.setPower(1);
             wait(500);
         }
         if(side.equals("blue")) {
@@ -145,7 +145,7 @@ public class RunToTargetZoneState implements State{
     // This method is used in all the previous methods, and it allows us to sense and stop at tape.
     public void runToTape() { //Robot runs forward until the first colored tape it senses
         if (side.equals("red")) { //the colored tape will stop at red tape
-            while (colorSensor.blue() > colorSensor.red() || colorSensor.green() > colorSensor.red()) {
+            while (colorSensor.blue() > colorSensor.red() || colorSensor.red() < 90 /*colorSensor.green() > colorSensor.red()*/) {
                 move("forward");
             }
             move("stop");

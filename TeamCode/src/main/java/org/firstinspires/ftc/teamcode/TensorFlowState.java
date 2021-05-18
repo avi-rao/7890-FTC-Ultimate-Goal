@@ -101,8 +101,8 @@ public class TensorFlowState implements State{
                     if (updatedRecognitions != null) {
                         if (updatedRecognitions.size() == 0 ) {
 
-                            //targetZone = 0;
-                            //active = false;
+                            targetZone = 0;
+                            active = false; //TODO: let's try this
 
                             // empty list.  no objects recognized.
                         } else {
