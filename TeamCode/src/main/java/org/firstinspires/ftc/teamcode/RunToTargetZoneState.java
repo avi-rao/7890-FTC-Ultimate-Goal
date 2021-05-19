@@ -100,7 +100,7 @@ public class RunToTargetZoneState implements State{
     //This is the method run when we need to go to target zone A.
     public void runToA() {
         a = true;
-        if(side.equals("red")) {
+        /*if(side.equals("red")) {
             center.setPower(-1);
             wait(500);
             center.setPower(0);
@@ -112,11 +112,15 @@ public class RunToTargetZoneState implements State{
             runToTape();
         }
 
+         */
+
+        runToTape();
 
     }
 
     //This is the method run when we need to go to target zone B.
     public void runToB() {
+        /*
         if(side.equals("red")) {
             //center.setPower(1); //this value is a test value
             wait(500); //this value is a test value
@@ -126,13 +130,15 @@ public class RunToTargetZoneState implements State{
         if(side.equals("blue")) {
             //center.setPower(-1); //this value is a test value
             wait(500); //this value is a test value
+
+         */
             runToTape();
-        }
     }
 
     //This is the method run when we need to go to target zone C. Unlike the other two, it uses a
     // distance sensor to get to the target zone.
     public void runToC() {
+        /*
         if(side.equals("red")) {
             center.setPower(-1);
             wait(500);
@@ -142,6 +148,7 @@ public class RunToTargetZoneState implements State{
             center.setPower(1);
             wait(500);
         }
+         */
         while(distSensor.getDistance(DistanceUnit.INCH) > 5) {
             move("forward");
         }
