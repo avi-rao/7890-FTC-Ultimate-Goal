@@ -98,6 +98,8 @@ public class ColorSenseStopState implements State {
         else if (cval.equals("yellow")) {
             RunToTargetZoneState r = new RunToTargetZoneState(moto, cs1, mr, "red");
             if(r.a) {
+                move("left");
+                wait(500);
                 move("forward");
             }
             else {
@@ -144,6 +146,14 @@ public class ColorSenseStopState implements State {
             center.setPower(0);
         }
 
+    }
+
+    public void wait(int time) {
+        try {
+            Thread.sleep(time);//milliseconds
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

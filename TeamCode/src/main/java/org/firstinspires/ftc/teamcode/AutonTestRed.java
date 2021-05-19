@@ -35,7 +35,11 @@ public class AutonTestRed extends OpMode
     DcMotor leftBack;
     DcMotor rightBack;
     DcMotor center;
+
+
     DcMotor wobble;
+    CRServo clawServo;
+
     /*
     ---SENSORS---
      */
@@ -66,7 +70,7 @@ public class AutonTestRed extends OpMode
     TensorFlowState tfodState;
     MoveTimeState strafeState;
     RunToTargetZoneState targetZoneState;
-    //CRServoState releaseWobbleGoal;
+    CRServoState releaseWobbleGoal;
     ColorSenseStopState park;
 
     //EncoderState tfodTest;
@@ -86,6 +90,7 @@ public class AutonTestRed extends OpMode
         distSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "dist sensor");
 
         wobble = hardwareMap.dcMotor.get("claw motor");
+        clawServo = hardwareMap.crservo.get("claw servo");
 
         /*
         ---MOTOR DIRECTIONS---
@@ -120,13 +125,16 @@ public class AutonTestRed extends OpMode
         strafeState = new MoveTimeState(motors, "right", 500, 1.0);
 
         targetZoneState = new RunToTargetZoneState(motors, tapeSensor, distSensor, "red");
-        //releaseWobbleGoal = new CRServoState(wobble, 2, 100);
+
+        releaseWobbleGoal = new CRServoState(clawServo, 2, 100);
+
         park = new ColorSenseStopState(motors, tapeSensor, "yellow", .5, "backward");
 
         moveForwardState.setNextState(tfodState);
         tfodState.setNextState(strafeState);
         strafeState.setNextState(targetZoneState);
-        targetZoneState.setNextState(park);
+        targetZoneState.setNextState(releaseWobbleGoal);
+        releaseWobbleGoal.setNextState(park);
         park.setNextState(null);
 
 
@@ -179,6 +187,7 @@ public class AutonTestRed extends OpMode
 
 
 
+
         machine = new StateMachine(moveForwardState);
 
     }
@@ -198,7 +207,7 @@ public class AutonTestRed extends OpMode
 
     public void wait(int time) {
         try {
-            Thread.sleep(time * 1000);//milliseconds
+            Thread.sleep(time);//milliseconds
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

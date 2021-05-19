@@ -51,6 +51,7 @@ public class MoveTimeState implements State{
         else {
             move(direc);
             wait(time);
+            move("stop");
         }
         return nextState;
     }

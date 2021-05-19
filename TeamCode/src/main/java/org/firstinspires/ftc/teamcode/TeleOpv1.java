@@ -90,13 +90,14 @@ public class TeleOpv1 extends OpMode {
 
         clawMotor.setPower(.25 * ((double) gamepad1.right_trigger - (double) gamepad1.left_trigger));
 
+
         /*
         if (!slow) {
         /*
         ---WOBBLE GOAL MECHANISM---
          */
             //We control the movement of the "wrist" using a trigger
-            clawMotor.setPower((double) gamepad1.right_trigger - (double) gamepad1.left_trigger);
+            //clawMotor.setPower((double) gamepad1.right_trigger - (double) gamepad1.left_trigger);
 
             //isOpen keeps track of if the claw is open or closed
 
@@ -118,15 +119,32 @@ public class TeleOpv1 extends OpMode {
         //the open needs to be halved
         if(isOpen && gamepad1.left_bumper == true) {
             clawServo.setPower(-1);
+            wait(500);
+            clawServo.setPower(0);
             isOpen = false;
+
         }
         else if (isOpen == false && gamepad1.right_bumper == true) {
             clawServo.setPower(1);
+            wait(500);
+            clawServo.setPower(0);
             isOpen = true;
+        }
+
+        if(gamepad1.b) {
+            clawServo.setPower(0);
         }
 
 
 
 
+
+    }
+    public void wait(int time) {
+        try {
+            Thread.sleep(time);//milliseconds
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
