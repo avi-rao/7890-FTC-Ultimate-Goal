@@ -118,6 +118,7 @@ public class AutonTestRed extends OpMode
          */
 
         moveForwardState = new EncoderState(motors, 10, 0.3, "forward");
+
         tfodState = new TensorFlowState(hardwareMap.appContext.getResources().getIdentifier(
                 "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
 
@@ -126,7 +127,7 @@ public class AutonTestRed extends OpMode
 
         targetZoneState = new RunToTargetZoneState(motors, tapeSensor, distSensor, "red");
 
-        releaseWobbleGoal = new CRServoState(clawServo, 2, 100);
+        releaseWobbleGoal = new CRServoState(clawServo, 1, 500);
 
         park = new ColorSenseStopState(motors, tapeSensor, "yellow", .5, "backward");
 

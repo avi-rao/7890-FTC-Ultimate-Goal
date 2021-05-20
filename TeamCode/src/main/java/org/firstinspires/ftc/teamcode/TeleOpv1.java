@@ -58,7 +58,7 @@ public class TeleOpv1 extends OpMode {
         rightBack.setDirection(RIGHTDIRECTION);
         center.setDirection(DcMotor.Direction.REVERSE);
     }
-    boolean isOpen = true;
+    //boolean isOpen = true;
     boolean slow = false;
     @Override
     public void loop() {
@@ -117,27 +117,23 @@ public class TeleOpv1 extends OpMode {
 
         //Let's us open and close the claw using just one button (the left bumper)
         //the open needs to be halved
-        if(isOpen && gamepad1.left_bumper == true) {
+        if(/*isOpen &&*/ gamepad1.left_bumper == true) {
             clawServo.setPower(-1);
             wait(500);
             clawServo.setPower(0);
-            isOpen = false;
+            //isOpen = false;
 
         }
-        else if (isOpen == false && gamepad1.right_bumper == true) {
+        if (/*isOpen == false &&*/ gamepad1.right_bumper == true) {
             clawServo.setPower(1);
             wait(500);
-            clawServo.setPower(0);
-            isOpen = true;
+            //clawServo.setPower(0);
+            //isOpen = true;
         }
 
         if(gamepad1.b) {
             clawServo.setPower(0);
         }
-
-
-
-
 
     }
     public void wait(int time) {

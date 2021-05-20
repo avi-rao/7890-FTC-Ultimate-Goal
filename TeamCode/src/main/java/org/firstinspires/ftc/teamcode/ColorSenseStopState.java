@@ -100,7 +100,8 @@ public class ColorSenseStopState implements State {
             if(r.a) {
                 move("left");
                 wait(500);
-                move("forward");
+                return NextState;
+                //move("forward");
             }
             else {
                 move(dir);
