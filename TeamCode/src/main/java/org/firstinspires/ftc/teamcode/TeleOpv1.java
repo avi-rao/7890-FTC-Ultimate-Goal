@@ -88,7 +88,7 @@ public class TeleOpv1 extends OpMode {
 
             center.setPower(strafe);
 
-        clawMotor.setPower(.25 * ((double) gamepad1.right_trigger - (double) gamepad1.left_trigger));
+        clawMotor.setPower(.5 * ((double) gamepad1.right_trigger - (double) gamepad1.left_trigger));
 
 
         /*

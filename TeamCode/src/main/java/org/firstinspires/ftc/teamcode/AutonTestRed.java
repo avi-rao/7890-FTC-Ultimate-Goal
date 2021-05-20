@@ -123,13 +123,14 @@ public class AutonTestRed extends OpMode
                 "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
 
         //tfodTest = new EncoderState(motors, 10, 0.3, "forward");
-        strafeState = new MoveTimeState(motors, "right", 500, 1.0);
+        strafeState = new MoveTimeState(motors, "right", 750, 1.0);
 
         targetZoneState = new RunToTargetZoneState(motors, tapeSensor, distSensor, "red");
 
-        releaseWobbleGoal = new CRServoState(clawServo, 1, 500);
+        releaseWobbleGoal = new CRServoState(clawServo, 1.0, 500);
 
         park = new ColorSenseStopState(motors, tapeSensor, "yellow", .5, "backward");
+
 
         moveForwardState.setNextState(tfodState);
         tfodState.setNextState(strafeState);
@@ -187,6 +188,7 @@ public class AutonTestRed extends OpMode
 
 
 
+        clawServo.setPower(-1);
 
 
         machine = new StateMachine(moveForwardState);

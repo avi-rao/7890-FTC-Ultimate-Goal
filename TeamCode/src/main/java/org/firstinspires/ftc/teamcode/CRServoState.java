@@ -38,8 +38,9 @@ public class CRServoState implements State{
 
     public State update() {
         servo.setPower(power);
-        wait(time); //we can wait
-        servo.setPower(0);
+        wait(time);
+        //wait(time); //we can wait
+        //servo.setPower(0);
 
         return nextState;
     }

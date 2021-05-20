@@ -158,7 +158,7 @@ public class RunToTargetZoneState implements State{
     // This method is used in all the previous methods, and it allows us to sense and stop at tape.
     public void runToTape() { //Robot runs forward until the first colored tape it senses
         if (side.equals("red")) { //the colored tape will stop at red tape
-            while (colorSensor.blue() > colorSensor.red() || colorSensor.red() < 90 || colorSensor.red() > 100/*colorSensor.green() > colorSensor.red()*/) {
+            while (colorSensor.blue() > colorSensor.red() || colorSensor.red() < 70 || colorSensor.red() > 110/*colorSensor.green() > colorSensor.red()*/) {
                 move("forward");
             }
             move("stop");
