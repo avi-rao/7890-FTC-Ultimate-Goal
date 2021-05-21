@@ -149,7 +149,7 @@ public class RunToTargetZoneState implements State{
             wait(500);
         }
          */
-        while(distSensor.getDistance(DistanceUnit.INCH) > 5) {
+        while(distSensor.getDistance(DistanceUnit.INCH) > 20) {
             move("forward");
         }
         move("stop");
