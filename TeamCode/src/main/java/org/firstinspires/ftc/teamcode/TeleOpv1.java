@@ -39,6 +39,7 @@ public class TeleOpv1 extends OpMode {
         /*
         ---HARDWARE MAPPING---
         */
+        //Matches our "code motors" to the names of our "actual motors"
         leftFront = hardwareMap.dcMotor.get("left front");
         leftBack = hardwareMap.dcMotor.get("left back");
         rightFront = hardwareMap.dcMotor.get("right front");
