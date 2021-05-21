@@ -20,6 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 @Autonomous(name="Wobble Motor Test", group="Iterative Opmode")
 public class WobbleMotorTest extends OpMode {
+
+    private StateMachine machine;
+
     ArrayList<DcMotor> motors = new ArrayList<DcMotor>();
 
     DcMotor leftFront;
@@ -30,6 +33,8 @@ public class WobbleMotorTest extends OpMode {
     DcMotor wobblemotor;
     CRServo wobble;
 
+
+    MotorState wobbleTest;
     @Override
     public void init() {
         rightFront = hardwareMap.dcMotor.get("right front");
@@ -37,7 +42,7 @@ public class WobbleMotorTest extends OpMode {
         rightBack = hardwareMap.dcMotor.get("right back");
         leftBack = hardwareMap.dcMotor.get("left back");
         center = hardwareMap.dcMotor.get("center");
-        wobblemotor = hardwareMap.dcMotor.get("wobble motor");
+        wobblemotor = hardwareMap.dcMotor.get("claw motor");
 
         //distSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "distance sensor");
 
@@ -56,12 +61,24 @@ public class WobbleMotorTest extends OpMode {
         motors.add(leftBack);
         motors.add(center);
 
+        wobbleTest = new MotorState(wobblemotor, 250, -.25);
+
+        wobbleTest.setNextState(null);
+
+
 
     }
 
     @Override
+    public void start(){
+        machine = new StateMachine(wobbleTest);
+    }
+
+    @Override
     public void loop() {
-        wobblemotor.setPower(.5);
+        machine.update();
+
+       // wobblemotor.setPower(.5);
 
     }
 

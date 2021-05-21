@@ -70,6 +70,7 @@ public class AutonTestRed extends OpMode
     TensorFlowState tfodState;
     MoveTimeState strafeState;
     RunToTargetZoneState targetZoneState;
+    MotorState turnWobble;
     CRServoState releaseWobbleGoal;
     ColorSenseStopState park;
 
@@ -127,6 +128,8 @@ public class AutonTestRed extends OpMode
 
         targetZoneState = new RunToTargetZoneState(motors, tapeSensor, distSensor, "red");
 
+        turnWobble = new MotorState(wobble, 250, -.25);
+
         releaseWobbleGoal = new CRServoState(clawServo, 1.0, 500);
 
         park = new ColorSenseStopState(motors, tapeSensor, "yellow", .5, "backward");
@@ -135,7 +138,8 @@ public class AutonTestRed extends OpMode
         moveForwardState.setNextState(tfodState);
         tfodState.setNextState(strafeState);
         strafeState.setNextState(targetZoneState);
-        targetZoneState.setNextState(releaseWobbleGoal);
+        targetZoneState.setNextState(turnWobble);
+        turnWobble.setNextState(releaseWobbleGoal);
         releaseWobbleGoal.setNextState(park);
         park.setNextState(null);
 
