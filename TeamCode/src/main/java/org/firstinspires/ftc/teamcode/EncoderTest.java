@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 /*
 7890 Space Lions 2019 "auton target red"
-author: 7890 Software
+autho r: 7890 Software
 GOALS: move to the target zone, park
 DESCRIPTION: This code moves us to the target zone using only a color sensor and then parks. We don't use the wobble goal mech in this code
  */

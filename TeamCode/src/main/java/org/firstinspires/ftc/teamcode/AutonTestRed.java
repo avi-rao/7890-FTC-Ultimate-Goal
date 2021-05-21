@@ -155,7 +155,7 @@ public class AutonTestRed extends OpMode
         information, look at each respective state class.
          */
 
-        moveForwardState = new EncoderState(motors, 10, 0.3, "forward");
+        moveForwardState = new EncoderState(motors, 20, .6, "forward");
         //We now specify the parameters of the aforementioned EncoderState: It uses our motors, goes 10 inches, has a speed of .3, and goes forward
         tfodState = new TensorFlowState(hardwareMap.appContext.getResources().getIdentifier(
                 "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName()));

@@ -99,7 +99,7 @@ public class ColorSenseStopState implements State {
             RunToTargetZoneState r = new RunToTargetZoneState(moto, cs1, mr, "red");
             if(r.a) {
                 move("left");
-                wait(500);
+                wait(1000);
                 move("stop");
                 return NextState;
                 //move("forward");
