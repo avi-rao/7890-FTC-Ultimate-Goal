@@ -97,6 +97,8 @@ public class AutonTestRed extends OpMode
      * For more information, please reference the RunToTargetZoneState class
      */
 
+    MotorState turnWobbleGoal;
+
     CRServoState releaseWobbleGoal;
     /*
      *We create a new CRServoState called releaseWobbleGoal that does exactly what it sounds like; it releases the wobble goal!
@@ -165,6 +167,8 @@ public class AutonTestRed extends OpMode
         //Here for strafeState we set the parameters as our motors, moving right for 750 ms at a power of one.
         targetZoneState = new RunToTargetZoneState(motors, tapeSensor, distSensor, "red");
         //Here, for targetZoneState we set the parameters as our motors, color and distance sensor, and trying to sense red.
+        turnWobbleGoal = new MotorState(wobble, 250, -2.5);
+
         releaseWobbleGoal = new CRServoState(clawServo, 1.0, 500);
         //Here, we set the parameters of the Continous Rotation Servo to power 1 for 500 ms
         park = new ColorSenseStopState(motors, tapeSensor, "yellow", .5, "backward");
@@ -182,23 +186,10 @@ public class AutonTestRed extends OpMode
         moveForwardState.setNextState(tfodState);
         tfodState.setNextState(strafeState);
         strafeState.setNextState(targetZoneState);
-        targetZoneState.setNextState(releaseWobbleGoal);
+        targetZoneState.setNextState(turnWobbleGoal);
+        turnWobbleGoal.setNextState(releaseWobbleGoal);
         releaseWobbleGoal.setNextState(park);
         park.setNextState(null);
-
-
-
-      //  targetZoneState.setNextState(park);
-        //releaseWobbleGoal.setNextState(park);
-
-
-
-//The d here is subject to change via testing, just wanted to put it there because it resolved the error and we need one.
-//        moveState = new EncoderState(motors, 10, 1.0, "forward");
-//
-//        moveState.setNextState(null);
-
-
 
     }
 
@@ -210,7 +201,7 @@ public class AutonTestRed extends OpMode
 
 
 
-        clawServo.setPower(-1);
+        //clawServo.setPower(-1);
 
 
         machine = new StateMachine(moveForwardState);
