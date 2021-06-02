@@ -157,7 +157,7 @@ public class AutonTestRed extends OpMode
         information, look at each respective state class.
          */
 
-        moveForwardState = new EncoderState(motors, 20, .6, "forward");
+        moveForwardState = new EncoderState(motors, 25, 1.0, "forward");
         //We now specify the parameters of the aforementioned EncoderState: It uses our motors, goes 10 inches, has a speed of .3, and goes forward
         tfodState = new TensorFlowState(hardwareMap.appContext.getResources().getIdentifier(
                 "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName()));
@@ -167,7 +167,7 @@ public class AutonTestRed extends OpMode
         //Here for strafeState we set the parameters as our motors, moving right for 750 ms at a power of one.
         targetZoneState = new RunToTargetZoneState(motors, tapeSensor, distSensor, "red");
         //Here, for targetZoneState we set the parameters as our motors, color and distance sensor, and trying to sense red.
-        turnWobbleGoal = new MotorState(wobble, 125, -2.5);
+        turnWobbleGoal = new MotorState(wobble, 100, -.25);
 
         releaseWobbleGoal = new CRServoState(clawServo, 1.0, 500);
         //Here, we set the parameters of the Continous Rotation Servo to power 1 for 500 ms
@@ -175,7 +175,7 @@ public class AutonTestRed extends OpMode
         //Finally, for our park state, we use our motors at power .5 going backwards and our color sensor to sense yellow(for the tape).
         /*`
         ---ORDERING STATES---
-         */
+         */ 
 
         /*
          * Down there is where the magic happens. Just like block coding(i.e Scrath, Hopscotch), we order our states

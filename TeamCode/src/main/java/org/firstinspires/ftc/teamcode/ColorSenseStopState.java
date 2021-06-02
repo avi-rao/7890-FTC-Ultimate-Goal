@@ -35,6 +35,8 @@ public class ColorSenseStopState implements State {
 
     State NextState;
 
+    TensorFlowState t;
+
 
     public ColorSenseStopState(ArrayList<DcMotor> motor, ColorSensor colorSensor, String color, double p, String direction){
         leftFront = motor.get(0);
@@ -97,7 +99,7 @@ public class ColorSenseStopState implements State {
         }
         else if (cval.equals("yellow")) {
             RunToTargetZoneState r = new RunToTargetZoneState(moto, cs1, mr, "red");
-            if(r.a) {
+            if(t.targetZone == 0) {
                 move("left");
                 wait(1000);
                 move("stop");

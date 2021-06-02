@@ -89,7 +89,7 @@ public class EncoderTest extends OpMode
         ---USING STATES---
          */
         //Our robot is as big as a field tile, so we don't really need to move, especially with how our phone is placed.
-      moveForwardState = new EncoderState(motors, 10, 1.0, "forward");
+      moveForwardState = new EncoderState(motors, 25, 1.0, "forward");
         //TODO: measure field for this, test camera angle of phone.
 
 
