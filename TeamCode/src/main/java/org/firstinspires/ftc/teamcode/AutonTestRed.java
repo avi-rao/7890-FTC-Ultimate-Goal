@@ -167,7 +167,7 @@ public class AutonTestRed extends OpMode
         //Here for strafeState we set the parameters as our motors, moving right for 750 ms at a power of one.
         targetZoneState = new RunToTargetZoneState(motors, tapeSensor, distSensor, "red");
         //Here, for targetZoneState we set the parameters as our motors, color and distance sensor, and trying to sense red.
-        turnWobbleGoal = new MotorState(wobble, 100, -.25);
+        turnWobbleGoal = new MotorState(wobble, 125, -.5);
 
         releaseWobbleGoal = new CRServoState(clawServo, 1.0, 500);
         //Here, we set the parameters of the Continous Rotation Servo to power 1 for 500 ms
